@@ -1,7 +1,9 @@
+import { gql } from "@apollo/client";
 import { NULL_CONTRACT } from "../config";
 import { Account } from "../models/Account";
 import { PoolToken } from "../models/PoolToken";
 import trans from "../translation/trans";
+import { graphqlClient } from "./GraphQLService";
 import { connectWallet } from "./WalletService";
 
 export async function signUserIn() {
@@ -32,6 +34,29 @@ export async function signUserOut() {
 
 export async function getPoolTokensByAccountId(accountId: string): Promise<PoolToken[]> {
     try {
+        const result = await graphqlClient.query({
+            query: gql`
+                query Account($accountId: String!) {
+                    getAccount(accountId: $accountId) {
+                        earned_fees {
+                            fees
+                            outcomeId
+                            poolId
+                        }
+                        balances {
+                            balance
+                            outcome_id
+                        }
+                    }
+                }
+            `,
+            variables: {
+                accountId,
+            }
+        });
+
+        console.log('[] result -> ', result);
+
         const x: PoolToken[] = [
             {
                 marketId: "1",
