@@ -47,7 +47,7 @@ class ProtocolContract {
     }
 
     async sell(
-        marketId: string, 
+        marketId: string,
         values: SwapFormValues
     ): Promise<void> {
         // @ts-ignore
@@ -58,9 +58,6 @@ class ProtocolContract {
             max_shares_in: values.amountIn
         })
     }
-
-
-
 }
 
 let protocolInstance: ProtocolContract;

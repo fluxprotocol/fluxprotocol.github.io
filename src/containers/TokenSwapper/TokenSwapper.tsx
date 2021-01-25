@@ -28,8 +28,6 @@ export default function TokenSwapper({
     className = '',
 }: TokenSwapperProps): ReactElement {
     const [formValues, setFormValues] = useState(createDefaultSwapFormValues(inputs[0], outputs[0]));
-    const [selectedInputToken, setSelectedInputToken] = useState(inputs[0]);
-    const [selectedOutputToken, setSelectedOutputToken] = useState(outputs[0]);
 
     function handleSubmit() {
         onConfirm(formValues);
@@ -55,7 +53,7 @@ export default function TokenSwapper({
             amountIn: value
         });
     }
-  
+
     function handleAmountOutChange(value: string) {
         setFormValues({
             ...formValues,
@@ -64,12 +62,12 @@ export default function TokenSwapper({
     }
 
     function switchTokenPlaces() {
-        setSelectedInputToken(selectedOutputToken);
-        setSelectedOutputToken(selectedInputToken);
         setFormValues({
             ...formValues,
             amountIn: formValues.amountOut,
-            amountOut: formValues.amountIn
+            amountOut: formValues.amountIn,
+            fromToken: formValues.toToken,
+            toToken: formValues.fromToken,
         });
         onRequestSwitchPairs();
     }
@@ -79,13 +77,13 @@ export default function TokenSwapper({
             <div className={s['token-swapper__token']}>
                 <div className={s['token-swapper__token-header']}>
                     <span>{trans('market.label.youPay')}</span>
-                    <span>{trans('global.balance', {}, true)}: {selectedInputToken.balanceFormatted}</span>
+                    <span>{trans('global.balance', {}, true)}: {formValues.fromToken.balanceFormatted}</span>
                 </div>
                 <TokenSelect
                     onTokenSwitch={handleInputTokenSwitch}
                     value={formValues.amountIn}
                     tokens={inputs}
-                    selectedToken={selectedInputToken}
+                    selectedToken={formValues.fromToken}
                     onValueChange={(v) => handleAmountInChange(v)}
                 />
             </div>
@@ -102,7 +100,7 @@ export default function TokenSwapper({
                     onTokenSwitch={handleOutputTokenSwitch}
                     value={formValues.amountOut}
                     tokens={outputs}
-                    selectedToken={selectedOutputToken}
+                    selectedToken={formValues.toToken}
                     onValueChange={(v) => handleAmountOutChange(v)}
                 />
             </div>

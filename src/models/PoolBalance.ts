@@ -33,5 +33,5 @@ export function transformToPoolBalanceViewModel(response: PoolBalanceGraphData[]
             poolWeight,
             weight: weight.toNumber(),
         };
-    });
+    }).sort((a, b) => a.outcomeId - b.outcomeId);
 }

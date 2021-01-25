@@ -28,9 +28,9 @@ class TokenContract {
                 market_id: marketId,
                 outcome_id: values.toToken.outcomeId,
                 min_shares_out: values.amountOut // TODO: add default slippage check to amountOut and make it expectedAmountOut
-
             }
-        })
+        });
+
         // @ts-ignore
         return this.contract.transfer_with_vault({
                 receiver_id: this.contract.account.accountId,

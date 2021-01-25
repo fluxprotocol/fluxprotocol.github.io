@@ -1,7 +1,5 @@
-import { PoolBalanceViewModel } from "./PoolBalance";
-import { TokenViewModel } from "./TokenViewModel";
-import BN from 'bn.js';
 import { PoolBalanceViewModel, transformToPoolBalanceViewModel } from "./PoolBalance";
+import { FUNGIBLE_TOKEN_ACCOUNT_ID } from "../config";
 
 export enum MarketCategory {
     Stocks = 'stocks',
@@ -64,5 +62,6 @@ export function transformToMarketViewModel(graphResponse: GraphMarketResponse): 
         resolutionDate: new Date(parseInt(graphResponse.end_time)),
         public: graphResponse.pool.public,
         volume: graphResponse.volume,
+        collateralToken: FUNGIBLE_TOKEN_ACCOUNT_ID,
     }
 }

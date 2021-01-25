@@ -5,6 +5,7 @@ import { FetchResult, FetchResultType } from '../models/FetchResult';
 import { GraphMarketResponse, MarketCategory, MarketViewModel, transformToMarketViewModel } from '../models/Market';
 import createProtocolContract from './contracts/ProtocolContract';
 import { graphqlClient } from './GraphQLService';
+
 export interface MarketFormValues {
     isCategoricalMarket: boolean;
     categories: MarketCategory[];
@@ -43,8 +44,6 @@ export async function createMarket(values: MarketFormValues): Promise<FetchResul
 }
 
 export async function getMarketById(marketId: string): Promise<MarketViewModel | null> {
-    const mainTokenResponse = await getMainToken();
-
     try {
         const result = await graphqlClient.query({
             query: gql`
