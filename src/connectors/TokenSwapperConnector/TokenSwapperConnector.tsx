@@ -4,6 +4,9 @@ import TokenSwapper from '../../containers/TokenSwapper';
 import TokenSwapperLoader from '../../containers/TokenSwapper/TokenSwapperLoader';
 import { TokenViewModel } from '../../models/TokenViewModel';
 import { Reducers } from '../../redux/reducers';
+import createProtocolContract from '../../services/contracts/ProtocolContract';
+import createTokenContract from '../../services/contracts/TokenContract';
+import { SwapFormValues } from '../../services/SwapService';
 
 interface Props {
     className?: string;
@@ -14,7 +17,7 @@ export default function TokenSwapperConnector({
 }: Props): ReactElement {
     const [switched, setSwitched] = useState(false);
     const mainToken = useSelector((store: Reducers) => store.tokens.mainToken);
-
+    const market = useSelector((store: Reducers) => store.market.marketDetail);
     if (!mainToken) {
         return <TokenSwapperLoader />;
     }
@@ -28,6 +31,7 @@ export default function TokenSwapperConnector({
             tokenName: 'KANYE WEST',
             balanceFormatted: '4.50',
             tokenSymbol: '',
+            outcomeId: 0
         },
         {
             balance: '7.92',
@@ -35,6 +39,7 @@ export default function TokenSwapperConnector({
             balanceFormatted: '4.50',
             tokenName: 'NO',
             tokenSymbol: '',
+            outcomeId: 1
         },
         {
             balance: '1',
@@ -42,11 +47,22 @@ export default function TokenSwapperConnector({
             balanceFormatted: '4.50',
             tokenName: 'MAYBE',
             tokenSymbol: '',
+            outcomeId: 2
         }
     ];
 
-    function onConfirm() {
-
+    async function onConfirm(
+        values: SwapFormValues
+    ): Promise<void> {
+        if (!market) throw new Error("Market is undefined");
+        console.log(values.fromToken.tokenName, market.collateralToken);
+        if (values.fromToken.tokenName === market.collateralToken) {
+            const token = await createTokenContract(values.fromToken.tokenName);
+            return token.buy(market.id, values);
+        } else {
+            const protocol = await createProtocolContract();
+            return protocol.sell(market.id, values);
+        }
     }
 
     function handleRequestSwitchPairs() {

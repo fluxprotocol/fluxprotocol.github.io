@@ -52,7 +52,7 @@ export default function TokenSelect({
                     )}
 
                     {tokens.length > 1 && (
-                        <NonLinkButton onClick={handleChangePairClick}>
+                        <NonLinkButton type="button" onClick={handleChangePairClick}>
                             {isDropdownOpen ? trans('global.action.cancel') : trans('market.action.changeTradingPair')}
                         </NonLinkButton>
                     )}
@@ -60,6 +60,7 @@ export default function TokenSelect({
                 <input
                     type="number"
                     value={value}
+                    placeholder="0"
                     className={s['token-select__input']}
                     onChange={(e) => onValueChange(e.target.value)}
                 />

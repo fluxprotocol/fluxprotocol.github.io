@@ -7,3 +7,5 @@ export const PROTOCOL_ACCOUNT_ID = process.env.REACT_APP_PROTOCOL_ACCOUNT_ID || 
 export const FUNGIBLE_TOKEN_ACCOUNT_ID = process.env.REACT_APP_FUNGIBLE_TOKEN_ACCOUNT_ID || 'ft.flux-dev';
 export const MAX_GAS = new BN("300000000000000");
 export const STORAGE_DEFAULT = new BN("115800000000000000000000");
+export const BUY = "BUY";
+export const SELL = "SELL";

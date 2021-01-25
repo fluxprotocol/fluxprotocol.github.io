@@ -1,4 +1,5 @@
 import { PoolBalanceViewModel } from "./PoolBalance";
+import { TokenViewModel } from "./TokenViewModel";
 
 export enum MarketCategory {
     Stocks = 'stocks',
@@ -23,4 +24,5 @@ export interface MarketViewModel {
     volume: string;
     category: (MarketCategory | string)[];
     extraInfo: string;
+    collateralToken: string;
 }

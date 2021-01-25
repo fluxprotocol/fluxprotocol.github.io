@@ -4,4 +4,5 @@ export interface TokenViewModel {
     balanceFormatted: string;
     price: number;
     tokenSymbol: string;
+    outcomeId: number;
 }

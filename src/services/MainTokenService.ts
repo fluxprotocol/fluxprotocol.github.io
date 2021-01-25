@@ -1,5 +1,5 @@
 import { utils } from 'near-api-js';
-import { COINGECKO_API_URL } from "../config";
+import { COINGECKO_API_URL, FUNGIBLE_TOKEN_ACCOUNT_ID } from "../config";
 import { FetchResult, FetchResultType, isFetchResultSuccesful } from '../models/FetchResult';
 import { TokenViewModel } from '../models/TokenViewModel';
 import { sleep } from '../utils/sleep';
@@ -54,9 +54,10 @@ export async function getMainToken(): Promise<FetchResult<TokenViewModel, string
             data: {
                 balance: accountBalance,
                 price: priceDataResponse.data,
-                tokenName: MAIN_TOKEN.toUpperCase(),
+                tokenName: FUNGIBLE_TOKEN_ACCOUNT_ID,
                 balanceFormatted: formatMainToken(accountBalance),
                 tokenSymbol: 'Ⓝ',
+                outcomeId: NaN
             },
         };
     } catch (error) {

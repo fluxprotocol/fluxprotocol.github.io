@@ -22,8 +22,8 @@ export default function TokenDropdown({
                     {trans('global.balance')}
                 </div>
                 <div className={s['token-dropdown__tokens']}>
-                    {tokens.map((token) => (
-                        <button onClick={() => onTokenClick(token)} className={s['token-dropdown__token']}>
+                    {tokens.map((token, key) => (
+                        <button key={key} onClick={() => onTokenClick(token)} className={s['token-dropdown__token']}>
                             <div className={s['token-dropdown__token-info']}>
                                 <Token tokenName={token.tokenName} className={s['token-dropdown__token-icon']} />
                                 <span>{token.tokenName}</span>

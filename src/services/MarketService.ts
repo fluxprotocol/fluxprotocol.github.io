@@ -1,8 +1,10 @@
 import { format } from 'date-fns';
-import { FetchResult, FetchResultType } from '../models/FetchResult';
+import { FUNGIBLE_TOKEN_ACCOUNT_ID } from '../config';
+import { FetchResult, FetchResultType, isFetchResultSuccesful } from '../models/FetchResult';
 import { MarketCategory, MarketViewModel } from '../models/Market';
 import { sleep } from '../utils/sleep';
 import createProtocolContract from './contracts/ProtocolContract';
+import { getMainToken } from './MainTokenService';
 export interface MarketFormValues {
     isCategoricalMarket: boolean;
     categories: MarketCategory[];
@@ -34,6 +36,8 @@ export async function createMarket(values: MarketFormValues): Promise<FetchResul
 }
 
 export async function getMarketById(marketId: string): Promise<MarketViewModel | null> {
+    const mainTokenResponse = await getMainToken();
+
     try {
         const market: MarketViewModel = {
             id: marketId,
@@ -59,6 +63,7 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
                     outcomeLabel: 'No',
                 }
             ],
+            collateralToken: FUNGIBLE_TOKEN_ACCOUNT_ID
         };
 
         await sleep(2000);
@@ -68,6 +73,7 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
         console.error('[getMarketById]', error);
         return null;
     }
+
 }
 
 export interface MarketFilters {
@@ -102,6 +108,7 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
                     outcomeLabel: 'No',
                 }
             ],
+            collateralToken: FUNGIBLE_TOKEN_ACCOUNT_ID
         };
 
         const x = new Array(23).fill(0).map((nan, index) => ({
@@ -146,6 +153,7 @@ export async function getResolutingMarkets(): Promise<MarketViewModel[]> {
                     outcomeLabel: 'No',
                 }
             ],
+            collateralToken: FUNGIBLE_TOKEN_ACCOUNT_ID
         };
 
         const x = new Array(23).fill(0).map((nan, index) => ({

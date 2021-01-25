@@ -9,12 +9,14 @@ import TokenSelect from '../TokenSelect';
 import SwapOverview from './components/SwapOverview/SwapOverview';
 
 import s from './TokenSwapper.module.scss';
+import createDefaultSwapFormValues from './utils/createDefaultSwapFormValues';
+import { SwapFormValues } from '../../services/SwapService';
 
 interface TokenSwapperProps {
     inputs: TokenViewModel[];
     outputs: TokenViewModel[];
     onRequestSwitchPairs: () => void;
-    onConfirm: () => void;
+    onConfirm: (formData: SwapFormValues) => Promise<void>;
     className?: string;
 }
 
@@ -25,36 +27,55 @@ export default function TokenSwapper({
     onRequestSwitchPairs,
     className = '',
 }: TokenSwapperProps): ReactElement {
+    const [formValues, setFormValues] = useState(createDefaultSwapFormValues(inputs[0], outputs[0]));
     const [selectedInputToken, setSelectedInputToken] = useState(inputs[0]);
     const [selectedOutputToken, setSelectedOutputToken] = useState(outputs[0]);
 
-    const [inputValue, setInputValue] = useState('0');
-    const [outputValue, setOutputValue] = useState('0');
-
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        onConfirm();
+    function handleSubmit() {
+        onConfirm(formValues);
     }
 
-    const handleInputTokenSwitch = useCallback((token: TokenViewModel) => {
-        setSelectedInputToken(token);
-    }, []);
+    function handleInputTokenSwitch(token: TokenViewModel) {
+        setFormValues({
+            ...formValues,
+            fromToken: token
+        });
+    }
 
-    const handleOutputTokenSwitch = useCallback((token: TokenViewModel) => {
-        setSelectedOutputToken(token);
-    }, []);
+    function handleOutputTokenSwitch(token: TokenViewModel) {
+        setFormValues({
+            ...formValues,
+            toToken: token
+        });
+    }
+
+    function handleAmountInChange(value: string) {
+        setFormValues({
+            ...formValues,
+            amountIn: value
+        });
+    }
+  
+    function handleAmountOutChange(value: string) {
+        setFormValues({
+            ...formValues,
+            amountOut: value
+        });
+    }
 
     function switchTokenPlaces() {
         setSelectedInputToken(selectedOutputToken);
         setSelectedOutputToken(selectedInputToken);
-        setInputValue(outputValue);
-        setOutputValue(inputValue);
-
+        setFormValues({
+            ...formValues,
+            amountIn: formValues.amountOut,
+            amountOut: formValues.amountIn
+        });
         onRequestSwitchPairs();
     }
 
     return (
-        <form className={classnames(s['token-swapper'], className)} onSubmit={handleSubmit}>
+        <form className={classnames(s['token-swapper'], className)}>
             <div className={s['token-swapper__token']}>
                 <div className={s['token-swapper__token-header']}>
                     <span>{trans('market.label.youPay')}</span>
@@ -62,10 +83,10 @@ export default function TokenSwapper({
                 </div>
                 <TokenSelect
                     onTokenSwitch={handleInputTokenSwitch}
-                    value={inputValue}
+                    value={formValues.amountIn}
                     tokens={inputs}
                     selectedToken={selectedInputToken}
-                    onValueChange={(v) => setInputValue(v)}
+                    onValueChange={(v) => handleAmountInChange(v)}
                 />
             </div>
 
@@ -79,10 +100,10 @@ export default function TokenSwapper({
                 </div>
                 <TokenSelect
                     onTokenSwitch={handleOutputTokenSwitch}
-                    value={outputValue}
+                    value={formValues.amountOut}
                     tokens={outputs}
                     selectedToken={selectedOutputToken}
-                    onValueChange={(v) => setOutputValue(v)}
+                    onValueChange={(v) => handleAmountOutChange(v)}
                 />
             </div>
 
@@ -93,7 +114,7 @@ export default function TokenSwapper({
                 <SwapOverview />
             </div>
 
-            <Button className={s['token-swapper__confirm']}>
+            <Button onClick={handleSubmit} className={s['token-swapper__confirm']}>
                 {trans('market.action.confirmSwap')}
             </Button>
         </form>

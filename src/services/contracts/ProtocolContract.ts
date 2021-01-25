@@ -1,5 +1,6 @@
 import { Account, Contract } from "near-api-js";
 import { FUNGIBLE_TOKEN_ACCOUNT_ID, MAX_GAS, PROTOCOL_ACCOUNT_ID, STORAGE_DEFAULT } from "../../config";
+import { SwapFormValues } from "../SwapService";
 import { connectWallet } from "../WalletService";
 
 class ProtocolContract {
@@ -8,7 +9,7 @@ class ProtocolContract {
     constructor(account: Account) {
         this.contract = new Contract(account, PROTOCOL_ACCOUNT_ID, {
             viewMethods: [],
-            changeMethods: ['create_market', 'seed_pool'],
+            changeMethods: ['create_market', 'seed_pool', 'sell'],
         });
     }
 
@@ -42,6 +43,22 @@ class ProtocolContract {
             denorm_weights: denormWeights,
         }, MAX_GAS, STORAGE_DEFAULT);
     }
+
+    async sell(
+        marketId: string, 
+        values: SwapFormValues
+    ): Promise<void> {
+        // @ts-ignore
+        this.contract.sell({
+            market_id: marketId,
+            collateral_out: values.amountOut,
+            outcome_target: values.fromToken.outcomeId,
+            max_shares_in: values.amountIn
+        })
+    }
+
+
+
 }
 
 let protocolInstance: ProtocolContract;
