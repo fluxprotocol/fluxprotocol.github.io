@@ -59,6 +59,7 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
                         extra_info
                         finalized
                         id
+                        volume
                     }
                 }
             `,
@@ -103,6 +104,7 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
                             extra_info
                             finalized
                             id
+                            volume
                         }
                         total
                     }

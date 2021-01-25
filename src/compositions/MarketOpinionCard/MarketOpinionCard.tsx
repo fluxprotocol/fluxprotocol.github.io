@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import TokenWeightsBar from '../../components/TokenWeightsBar';
 import { MarketViewModel } from '../../models/Market';
+import { formatMainToken } from '../../services/MainTokenService';
 import trans from '../../translation/trans';
 import { getColorForOutcome } from '../../utils/getColorForOutcome';
 
@@ -32,7 +33,7 @@ export default function MarketOpinionCard({
             </div>
             <div className={s['volume-wrapper']}>
                 <span>{trans('market.label.totalVolume')}</span>
-                <span>${market.volume}</span>
+                <span>{formatMainToken(market.volume)}</span>
             </div>
         </div>
     );

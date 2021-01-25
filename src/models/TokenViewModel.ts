@@ -35,9 +35,7 @@ export function transformToTokenViewModels(
 ): TokenViewModel[] {
     const poolBalances = transformToPoolBalanceViewModel(response, outcomeTags);
 
-
     return poolBalances.map((poolBalance) => {
-        console.log('[] poolBalance.price.toFixed(2) -> ', poolBalance.price.toFixed(8));
         return {
             balance: '0',
             balanceFormatted: '0',

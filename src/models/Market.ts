@@ -22,6 +22,7 @@ export interface GraphMarketResponse {
     extra_info: string;
     finalized: boolean;
     id: string;
+    volume: string;
     pool: {
         public: boolean;
         owner: string;
@@ -61,6 +62,6 @@ export function transformToMarketViewModel(graphResponse: GraphMarketResponse): 
         owner: graphResponse.pool.owner,
         resolutionDate: new Date(parseInt(graphResponse.end_time)),
         public: graphResponse.pool.public,
-        volume: '0',
+        volume: graphResponse.volume,
     }
 }
