@@ -1,5 +1,5 @@
 import BN from "bn.js";
-
+// TODO ASK FRANKLIN
 export interface PoolBalanceViewModel {
     outcomeId: number;
     price: number;
