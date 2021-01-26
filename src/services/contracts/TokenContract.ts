@@ -35,7 +35,7 @@ export class TokenContract {
         marketId: string,
         values: SwapFormValues
     ): Promise<void> {
-        console.log(values.amountOut)
+
         let payload = JSON.stringify({
             function: "buy",
             args: {
