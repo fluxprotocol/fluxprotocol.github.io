@@ -74,7 +74,7 @@ export class TokenContract {
 
     async publishPool(marketId: string, amountIn: string) {
         let payload = JSON.stringify({
-            function: "publish_pool",
+            function: "publish",
             args: {
                 market_id: marketId,
             }
