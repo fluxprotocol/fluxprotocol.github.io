@@ -1,11 +1,12 @@
 import BN from "bn.js";
-// TODO ASK FRANKLIN
+
 export interface PoolBalanceViewModel {
     outcomeId: number;
     price: number;
     weight: number;
     poolWeight: BN;
     outcomeLabel: string;
+    poolBalance: string;
 }
 
 export interface PoolBalanceGraphData {
@@ -27,6 +28,7 @@ export function transformToPoolBalanceViewModel(response: PoolBalanceGraphData[]
             poolWeight: new BN('0'),
             price: 0,
             weight: 0,
+            poolBalance: "0",
         }));
     }
 
@@ -43,7 +45,8 @@ export function transformToPoolBalanceViewModel(response: PoolBalanceGraphData[]
             outcomeLabel: outcomeTags[poolBalance.outcome_id],
             price: poolBalance.price,
             poolWeight,
-            weight: weight.toNumber(), // TODO: wut?
+            poolBalance: poolBalance.balance,
+            weight: weight.toNumber(), // TODO: Ask Franklin what this does, seems like it's used to calculate odds (which would be the wrong calculation)
         };
     }).sort((a, b) => a.outcomeId - b.outcomeId);
 }

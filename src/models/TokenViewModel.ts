@@ -11,6 +11,7 @@ export interface TokenViewModel {
     outcomeId: number;
     tokenAccountId?: string;
     poolWeight: BN;
+    poolBalance: string;
     weight: number;
     decimals: number;
 }
@@ -50,6 +51,7 @@ export function transformToTokenViewModels(
             tokenSymbol: generateTokenName(poolBalance.outcomeLabel),
             outcomeId: poolBalance.outcomeId,
             weight: poolBalance.weight,
+            poolBalance: poolBalance.poolBalance,
             poolWeight: poolBalance.poolWeight,
             decimals: 18,
         };
@@ -74,6 +76,7 @@ export function newTransformToTokenViewModels(
             price: poolBalance?.price || 0,
             tokenSymbol: generateTokenName(outcome),
             tokenName: outcome,
+            poolBalance: poolBalance?.poolBalance || "0",
             poolWeight: poolBalance?.poolWeight || new BN(0),
             weight: poolBalance?.weight || 0,
             decimals: 18,
@@ -100,6 +103,7 @@ export async function transformToMainTokenViewModel(collateralTokenAccountId: st
         price: await getCollateralTokenPrice(collateralTokenAccountId),
         tokenName: collateralTokenAccountId,
         tokenSymbol: collateralTokenAccountId,
+        poolBalance: "",
         weight: 0,
         tokenAccountId: collateralTokenAccountId,
     };

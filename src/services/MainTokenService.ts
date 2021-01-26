@@ -66,6 +66,7 @@ export async function getMainToken(): Promise<FetchResult<TokenViewModel, string
                 poolWeight: new BN(0),
                 weight: 0,
                 decimals: 18,
+                poolBalance: ""
             },
         };
     } catch (error) {
