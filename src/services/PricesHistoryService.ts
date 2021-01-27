@@ -41,6 +41,7 @@ export async function getPricesHistoryByMarketId(marketId: string, period: Perio
         }
 
         const result = await graphqlClient.query({
+            fetchPolicy: 'network-only',
             query: gql`
                 query MarketPriceHistory($marketId: String!, $beginTimestamp: String!, $dateMetric: DateMetric) {
                     history: getPriceHistory(poolId: $marketId, beginTimestamp: $beginTimestamp, dateMetric: $dateMetric) {

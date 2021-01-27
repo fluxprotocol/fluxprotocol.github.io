@@ -33,7 +33,6 @@ export default function MarketPage() {
 
     useEffect(() => {
         dispatch(fetchMarketById(marketId));
-        dispatch(fetchPricesHistoryByMarketId(marketId));
     }, [dispatch, marketId]);
 
     return (

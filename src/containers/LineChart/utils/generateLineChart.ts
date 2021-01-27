@@ -60,6 +60,10 @@ export default function generateLineChart(canvas: HTMLCanvasElement): Chart | nu
                 display: false,
             },
 
+            animation: {
+                duration: 0,
+            },
+
             elements:{
                 line: {
                     tension: 0,
