@@ -44,7 +44,6 @@ export const calcSellAmountInCollateral = (
 
   if (r) {
     const amountToSell = new Big(r.toFixed(0));
-    console.log("amt", amountToSell.toString())
     return amountToSell;
   }
 
