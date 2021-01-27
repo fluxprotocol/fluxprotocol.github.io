@@ -10,9 +10,9 @@ import { useDarkModeThemeContext } from "../../utils/hooks/useDarkModeTheme";
 import Button from "../../components/Button";
 import trans from "../../translation/trans";
 import { Account } from "../../models/Account";
-import { formatMainToken } from "../../services/MainTokenService";
 
 import s from './Menu.module.scss';
+import { formatCollateralToken } from "../../services/CollateralTokenService";
 interface Props {
     className?: string;
     onLoginClick: () => void;
@@ -73,7 +73,7 @@ export default function Menu({
                                 {account.accountId}
                             </Button>
                             <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
-                                <MuiMenuItem disabled>NEAR: {formatMainToken(account.balance)} Ⓝ</MuiMenuItem>
+                                <MuiMenuItem disabled>NEAR: {formatCollateralToken(account.balance, 24)} Ⓝ</MuiMenuItem>
                                 <MuiMenuItem onClick={handleProfileClick}>Profile</MuiMenuItem>
                                 <MuiMenuItem onClick={handleLogoutClick}>Logout</MuiMenuItem>
                             </MuiMenu>

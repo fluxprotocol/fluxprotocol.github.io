@@ -62,6 +62,7 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
                                 outcome_id
                                 balance
                                 price
+                                odds
                             }
                             tokens_info {
                                 is_pool_token

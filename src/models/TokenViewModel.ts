@@ -1,7 +1,9 @@
-import BN from "bn.js";
+import Big from "big.js";
+
 import { PoolBalanceGraphData, transformToPoolBalanceViewModel } from "./PoolBalance";
 import { AccountTokenBalance, formatCollateralToken, getCollateralTokenBalance, getCollateralTokenPrice } from '../services/CollateralTokenService';
 import { UserBalance } from "./UserBalance";
+
 export interface TokenViewModel {
     tokenName: string;
     balance: string;
@@ -10,12 +12,20 @@ export interface TokenViewModel {
     tokenSymbol: string;
     outcomeId: number;
     tokenAccountId?: string;
-    poolWeight: BN;
+    poolWeight: Big;
     poolBalance: string;
     weight: number;
+    odds: Big;
     decimals: number;
 }
 
+/**
+ * Generates a short token name (max 3 characters) for a token
+ *
+ * @export
+ * @param {string} tokenName
+ * @return {string}
+ */
 export function generateTokenName(tokenName: string): string {
     if (tokenName.length <= 3) {
         return tokenName.toUpperCase();
@@ -35,6 +45,15 @@ export function generateTokenName(tokenName: string): string {
     return tokenName.slice(0, 3).toUpperCase();
 }
 
+/**
+ * Transforms to a tokenview model shape
+ *
+ * @export
+ * @param {string[]} tags
+ * @param {PoolBalanceGraphData[]} [poolBalanceData=[]]
+ * @param {UserBalance[]} userBalances
+ * @return {TokenViewModel[]}
+ */
 export function transformToTokenViewModels(
     tags: string[],
     poolBalanceData: PoolBalanceGraphData[] = [],
@@ -54,13 +73,23 @@ export function transformToTokenViewModels(
             tokenSymbol: generateTokenName(outcome),
             tokenName: outcome,
             poolBalance: poolBalance?.poolBalance || "0",
-            poolWeight: poolBalance?.poolWeight || new BN(0),
+            poolWeight: poolBalance?.poolWeight || new Big(0),
             weight: poolBalance?.weight || 0,
             decimals: 18,
+            odds: poolBalance?.odds || new Big(0),
         };
     });
 }
 
+/**
+ * Used for the collateralToken fills some information to keep the shape of TokenViewModel
+ *
+ * @export
+ * @param {string} collateralTokenAccountId
+ * @param {string} [accountId]
+ * @param {boolean} [fetchPrice=true]
+ * @return {Promise<TokenViewModel>}
+ */
 export async function transformToMainTokenViewModel(collateralTokenAccountId: string, accountId?: string, fetchPrice = true): Promise<TokenViewModel> {
     let balances: AccountTokenBalance = {
         balance: '0',
@@ -76,12 +105,13 @@ export async function transformToMainTokenViewModel(collateralTokenAccountId: st
         balanceFormatted: balances.balanceFormatted,
         decimals: 18,
         outcomeId: NaN,
-        poolWeight: new BN(0),
+        poolWeight: new Big(0),
         price: fetchPrice ? await getCollateralTokenPrice(collateralTokenAccountId) : 0,
         tokenName: collateralTokenAccountId,
         tokenSymbol: collateralTokenAccountId,
         poolBalance: "",
         weight: 0,
         tokenAccountId: collateralTokenAccountId,
+        odds: new Big(0)
     };
 }

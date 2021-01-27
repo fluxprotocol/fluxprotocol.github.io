@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import TokenWeightsBar from '../../components/TokenWeightsBar';
 import { MarketViewModel } from '../../models/Market';
-import { formatMainToken } from '../../services/MainTokenService';
+import { formatCollateralToken } from '../../services/CollateralTokenService';
 import trans from '../../translation/trans';
 import { getColorForOutcome } from '../../utils/getColorForOutcome';
 
@@ -19,7 +19,7 @@ export default function MarketOpinionCard({
             <h2 className={s['title']}>
                 {trans('market.label.opinion')}
             </h2>
-            <TokenWeightsBar weights={market.outcomeTokens.map(b => b.weight)} className={s['token-weight-bar']} />
+            <TokenWeightsBar weights={market.outcomeTokens.map(b => b.odds.toNumber() * 100)} className={s['token-weight-bar']} />
             <div className={s['outcomes-wrapper']}>
                 {market.outcomeTokens.map((outcome, index) => (
                     <div key={outcome.outcomeId} className={s['outcome']}>
@@ -27,13 +27,13 @@ export default function MarketOpinionCard({
                             <div style={{ backgroundColor: `var(${getColorForOutcome(index)})` }} className={s['color-label']} />
                             <span>{outcome.tokenName}</span>
                         </div>
-                        <span>{outcome.weight}%</span>
+                        <span>{outcome.odds.mul(100).toNumber().toPrecision(3)}%</span>
                     </div>
                 ))}
             </div>
             <div className={s['volume-wrapper']}>
                 <span>{trans('market.label.totalVolume')}</span>
-                <span>{formatMainToken(market.volume)}</span>
+                <span>{formatCollateralToken(market.volume)}</span>
             </div>
         </div>
     );
