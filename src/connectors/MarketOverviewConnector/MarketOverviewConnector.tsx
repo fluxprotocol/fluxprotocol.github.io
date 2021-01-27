@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import MarketOverview from '../../containers/MarketOverview';
@@ -7,6 +7,7 @@ import { MarketCategory } from '../../models/Market';
 import { Reducers } from '../../redux/reducers';
 import { routePaths } from '../../routes';
 import { fetchMarkets } from '../../redux/market/marketActions';
+import { DEFAULT_LIMIT } from '../../config';
 
 
 export default function MarketOverviewConnector(): ReactElement {
@@ -15,6 +16,7 @@ export default function MarketOverviewConnector(): ReactElement {
     const loading = useSelector((store: Reducers) => store.market.marketLoading);
     const history = useHistory();
     const location = useLocation();
+    const offset = useRef<number>(0);
     const [filters, setFilters] = useState<MarketFilters>({
         categories: [],
     });
@@ -38,6 +40,7 @@ export default function MarketOverviewConnector(): ReactElement {
         const queryParams = new URLSearchParams(location.search);
         const newActiveFilters: MarketFilters = {
             ...filters,
+            limit: DEFAULT_LIMIT,
             categories: queryParams.getAll('categories') as MarketCategory[],
         };
 
@@ -45,12 +48,26 @@ export default function MarketOverviewConnector(): ReactElement {
         setFilters(newActiveFilters);
     }, [location]);
 
+    function handleRequestMoreMarkets() {
+        offset.current += DEFAULT_LIMIT;
+
+        const newActiveFilters: MarketFilters = {
+            ...filters,
+            offset: offset.current,
+            limit: DEFAULT_LIMIT,
+        };
+
+        dispatch(fetchMarkets(newActiveFilters, true));
+    }
+
     return (
         <MarketOverview
             loading={loading}
             markets={markets}
             activeFilters={filters}
             onFilterChange={handleFilterChange}
+            onRequestMoreMarkets={handleRequestMoreMarkets}
+            hasMoreMarkets={markets.length % DEFAULT_LIMIT === 0}
         />
     );
 }

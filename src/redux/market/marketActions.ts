@@ -1,6 +1,6 @@
 import { createMarket, getMarketById, getMarkets, getResolutingMarkets, MarketFilters, MarketFormValues } from "../../services/MarketService";
 import { publishPool, seedPool, SeedPoolFormValues } from "../../services/PoolService";
-import { setMarketErrors, setMarketLoading, setMarketDetail, setMarkets, setResolutingMarkets, setMarketEditLoading } from "./market";
+import { appendMarkets, setMarketErrors, setMarketLoading, setMarketDetail, setMarkets, setResolutingMarkets, setMarketEditLoading } from "./market";
 
 export function createNewMarket(values: MarketFormValues) {
     return async (dispatch: Function) => {
@@ -38,14 +38,19 @@ export function fetchMarketById(id: string) {
     };
 }
 
-export function fetchMarkets(filters: MarketFilters) {
+export function fetchMarkets(filters: MarketFilters, append?: boolean) {
     return async (dispatch: Function) => {
         try {
             dispatch(setMarketLoading(true));
 
             const markets = await getMarkets(filters);
 
-            dispatch(setMarkets(markets));
+            if (append) {
+                dispatch(appendMarkets(markets));
+            } else {
+                dispatch(setMarkets(markets));
+            }
+
             dispatch(setMarketLoading(false));
         } catch (error) {
             dispatch(setMarketLoading(false));

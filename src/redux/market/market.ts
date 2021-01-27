@@ -45,6 +45,12 @@ const marketsSlice = createSlice({
                 markets: action.payload,
             });
         },
+        appendMarkets(state: MarketState, action: PayloadAction<MarketViewModel[]>): MarketState {
+            return ({
+                ...state,
+                markets: [...action.payload, ...state.markets],
+            });
+        },
         setResolutingMarkets(state: MarketState, action: PayloadAction<MarketViewModel[]>): MarketState {
             return ({
                 ...state,
@@ -67,6 +73,7 @@ export const {
     setResolutingMarkets,
     setMarketDetail,
     setMarketEditLoading,
+    appendMarkets,
 } = marketsSlice.actions;
 
 export default marketsSlice.reducer;

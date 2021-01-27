@@ -1,4 +1,5 @@
 import React, { ReactElement, useMemo } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 import Tag from '../../components/Tag';
@@ -13,14 +14,18 @@ interface Props {
     markets: MarketViewModel[];
     loading: boolean;
     onFilterChange: (filters: MarketFilters) => void;
+    onRequestMoreMarkets: () => void;
     activeFilters: MarketFilters;
+    hasMoreMarkets: boolean;
 }
 
 export default function MarketOverview({
     markets,
     onFilterChange,
+    onRequestMoreMarkets,
     activeFilters,
     loading,
+    hasMoreMarkets,
 }: Props): ReactElement {
     const marketCategories = useMemo(() => Object.values(MarketCategory).filter(category => category !== MarketCategory.Unknown), []);
 
@@ -54,14 +59,22 @@ export default function MarketOverview({
                 ))}
             </div>
             <div className={s.markets}>
-                {markets.map(market => (
-                    <MarketCard
-                        key={market.id}
-                        href={routePaths.marketDetail(market.id)}
-                        className={s.market}
-                        market={market}
-                    />
-                ))}
+                <InfiniteScroll
+                    dataLength={markets.length}
+                    next={onRequestMoreMarkets}
+                    hasMore={hasMoreMarkets}
+                    loader={<div />}
+                    className={s.markets}
+                >
+                    {markets.map(market => (
+                        <MarketCard
+                            key={market.id}
+                            href={routePaths.marketDetail(market.id)}
+                            className={s.market}
+                            market={market}
+                        />
+                    ))}
+                </InfiniteScroll>
 
                 {loading && (
                     new Array(9).fill('').map((_, index) => (
