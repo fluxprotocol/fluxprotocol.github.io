@@ -25,7 +25,6 @@ interface TokenSwapperProps {
 }
 
 export default function TokenSwapper({
-    market,
     inputs,
     outputs,
     onConfirm,

@@ -21,13 +21,9 @@ export const calcSellAmountInCollateral = (
   if (outcomeId < 0 || outcomeId >= poolBalances.length) {
     throw new Error(`Outcome index '${outcomeId}' must be between 0 and '${poolBalances.length - 1}'`);
   }
-
-  console.log(sharesToSell.toString(), outcomeId);
-
   poolBalances.forEach(d => console.log(d.toString()));
 
   const holdings = poolBalances[outcomeId];
-  console.log(holdings.toString(), outcomeId);
   const otherHoldings = poolBalances.filter((_, i) => outcomeId !== i);
   const f = (r: Big): Big => {
     // For three outcomes, where the first outcome is the one being sold, the formula is:
@@ -48,6 +44,7 @@ export const calcSellAmountInCollateral = (
 
   if (r) {
     const amountToSell = new Big(r.toFixed(0));
+    console.log("amt", amountToSell.toString())
     return amountToSell;
   }
 

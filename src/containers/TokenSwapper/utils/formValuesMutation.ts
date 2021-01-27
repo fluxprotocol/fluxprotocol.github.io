@@ -7,7 +7,9 @@ import Big from "big.js";
 import { calcSellAmountInCollateral } from "../../../utils/calcSellAmountOut";
 
 export default function mutateFormValues(formValues: SwapFormValues, tokens: TokenViewModel[]): SwapFormValues {
-    if (!!formValues.formattedAmountIn) {
+    console.log(formValues.formattedAmountIn);
+    if (!formValues.formattedAmountIn) {
+        console.log("returning")
         return formValues;
     }
 
@@ -15,6 +17,7 @@ export default function mutateFormValues(formValues: SwapFormValues, tokens: Tok
     const buy = !!formValues.fromToken.tokenAccountId;
     const formattedFee = DEFAULT_FEE / 100;
 
+    console.log(formValues.amountIn);
     const amountOut = buy ? calcBuyAmountInShares(
             new Big(formValues.amountIn),
             formValues.toToken.outcomeId,

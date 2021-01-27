@@ -12,6 +12,7 @@ export enum MarketCategory {
     Sports = 'sports',
     Startups = 'startups',
     Unknown = 'unknown',
+    Beer = "beer"
 }
 
 export interface GraphMarketResponse {
