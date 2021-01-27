@@ -1,5 +1,5 @@
 import BN from "bn.js";
-// TODO ASK FRANKLIN
+
 export interface PoolBalanceViewModel {
     outcomeId: number;
     price: number;
@@ -32,13 +32,8 @@ export function transformToPoolBalanceViewModel(response: PoolBalanceGraphData[]
         }));
     }
 
-    const totalWeight = response
-        .reduce((prev, current) => prev.add(new BN(current.weight)), new BN(0));
-
     return response.map((poolBalance) => {
         const poolWeight = new BN(poolBalance.weight);
-        const base = new BN(poolBalance.weight).mul(new BN(100));
-        const weight = base.divRound(totalWeight);
 
         return {
             outcomeId: poolBalance.outcome_id,
@@ -46,7 +41,7 @@ export function transformToPoolBalanceViewModel(response: PoolBalanceGraphData[]
             price: poolBalance.price,
             poolWeight,
             poolBalance: poolBalance.balance,
-            weight: weight.toNumber(), // TODO: Ask Franklin what this does, seems like it's used to calculate odds (which would be the wrong calculation)
+            weight: 0,
         };
     }).sort((a, b) => a.outcomeId - b.outcomeId);
 }

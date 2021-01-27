@@ -1,7 +1,7 @@
 import Big from "big.js";
 import { newtonRaphson } from "@fvictorio/newton-raphson-method";
 
-/** Using Omen's utility functions adjusted where necessary  **/ 
+/** Using Omen's utility functions adjusted where necessary  **/
 /**
  * Computes the amount of collateral that needs to be sold to get `shares` amount of shares. Returns null if the amount
  * couldn't be computed.

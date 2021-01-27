@@ -35,30 +35,7 @@ export function generateTokenName(tokenName: string): string {
     return tokenName.slice(0, 3).toUpperCase();
 }
 
-
 export function transformToTokenViewModels(
-    response: PoolBalanceGraphData[],
-    outcomeTags: string[] = [],
-): TokenViewModel[] {
-    const poolBalances = transformToPoolBalanceViewModel(response, outcomeTags);
-
-    return poolBalances.map((poolBalance) => {
-        return {
-            balance: '0',
-            balanceFormatted: '0',
-            price: Number(poolBalance.price.toFixed(3)),
-            tokenName: poolBalance.outcomeLabel,
-            tokenSymbol: generateTokenName(poolBalance.outcomeLabel),
-            outcomeId: poolBalance.outcomeId,
-            weight: poolBalance.weight,
-            poolBalance: poolBalance.poolBalance,
-            poolWeight: poolBalance.poolWeight,
-            decimals: 18,
-        };
-    });
-}
-
-export function newTransformToTokenViewModels(
     tags: string[],
     poolBalanceData: PoolBalanceGraphData[] = [],
     userBalances: UserBalance[],
@@ -84,7 +61,7 @@ export function newTransformToTokenViewModels(
     });
 }
 
-export async function transformToMainTokenViewModel(collateralTokenAccountId: string, accountId?: string): Promise<TokenViewModel> {
+export async function transformToMainTokenViewModel(collateralTokenAccountId: string, accountId?: string, fetchPrice = true): Promise<TokenViewModel> {
     let balances: AccountTokenBalance = {
         balance: '0',
         balanceFormatted: '0',
@@ -100,7 +77,7 @@ export async function transformToMainTokenViewModel(collateralTokenAccountId: st
         decimals: 18,
         outcomeId: NaN,
         poolWeight: new BN(0),
-        price: await getCollateralTokenPrice(collateralTokenAccountId),
+        price: fetchPrice ? await getCollateralTokenPrice(collateralTokenAccountId) : 0,
         tokenName: collateralTokenAccountId,
         tokenSymbol: collateralTokenAccountId,
         poolBalance: "",

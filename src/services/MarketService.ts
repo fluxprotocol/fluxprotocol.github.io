@@ -4,6 +4,7 @@ import { DEFAULT_LIMIT } from '../config';
 
 import { FetchResult, FetchResultType } from '../models/FetchResult';
 import { GraphMarketResponse, MarketCategory, MarketViewModel, transformToMarketViewModel } from '../models/Market';
+import { transformToMainTokenViewModel } from '../models/TokenViewModel';
 import { UserBalance } from '../models/UserBalance';
 import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService';
 import createProtocolContract from './contracts/ProtocolContract';
@@ -83,15 +84,18 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
             }
         });
 
+        const market: GraphMarketResponse = result.data.market;
         const account = await getAccountInfo();
-        const accountId = account ? account.accountId : undefined;
+        const accountId = account?.accountId;
         let balances: UserBalance[] = [];
 
         if (accountId) {
             balances = await getBalancesForMarketByAccount(accountId, marketId);
         }
 
-        return transformToMarketViewModel(result.data.market, accountId, balances);
+        const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id, accountId);
+
+        return transformToMarketViewModel(market, collateralToken, balances);
     } catch (error) {
         console.error('[getMarketById]', error);
         return null;
@@ -121,6 +125,7 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
                                     outcome_id
                                     balance
                                     price
+                                    odds
                                 }
                             }
                             description
@@ -144,7 +149,8 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
             }
         });
 
-        const marketsPromises = result.data.market.items.map((market: GraphMarketResponse) => transformToMarketViewModel(market));
+        const dummyMainToken = await transformToMainTokenViewModel('');
+        const marketsPromises = result.data.market.items.map((market: GraphMarketResponse) => transformToMarketViewModel(market, dummyMainToken));
 
         return Promise.all(marketsPromises);
     } catch (error) {

@@ -18,7 +18,6 @@ import LiquidityProviderConnector from '../../connectors/LiquidityProviderConnec
 import s from './MarketPage.module.scss';
 import { Helmet } from 'react-helmet';
 import { Reducers } from '../../redux/reducers';
-import { loadTokens } from '../../redux/tokens/tokenActions';
 import ClaimFeesConnector from '../../connectors/ClaimFeesConnector';
 import SeedPoolConnector from '../../connectors/SeedPoolConnector';
 
@@ -34,7 +33,6 @@ export default function MarketPage() {
     useEffect(() => {
         dispatch(fetchMarketById(marketId));
         dispatch(fetchPricesHistoryByMarketId(marketId));
-        dispatch(loadTokens(marketId));
     }, [dispatch, marketId]);
 
     return (

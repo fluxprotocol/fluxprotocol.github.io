@@ -9,7 +9,6 @@ export default function SeedPoolConnector() {
     const dispatch = useDispatch();
     const account = useSelector((store: Reducers) => store.account.account);
     const market = useSelector((store: Reducers) => store.market.marketDetail);
-    const mainToken = useSelector((store: Reducers) => store.tokens.mainToken);
 
     const handleSeedPool = useCallback((formValues: SeedPoolFormValues) => {
         if (!market) return;
@@ -23,7 +22,7 @@ export default function SeedPoolConnector() {
         dispatch(publishPoolAction(market.id, market.poolTokenInfo.totalSupply, market.collateralTokenId));
     }, [dispatch, market]);
 
-    if (!market || !mainToken) {
+    if (!market) {
         return <div />;
     }
 
