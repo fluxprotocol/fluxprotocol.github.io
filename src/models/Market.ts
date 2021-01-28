@@ -1,4 +1,3 @@
-import { FUNGIBLE_TOKEN_ACCOUNT_ID } from "../config";
 import { TokenViewModel, transformToTokenViewModels } from "./TokenViewModel";
 import { UserBalance } from "./UserBalance";
 
@@ -73,7 +72,7 @@ export async function transformToMarketViewModel(graphResponse: GraphMarketRespo
         resolutionDate: new Date(parseInt(graphResponse.end_time)),
         public: graphResponse.pool.public,
         volume: graphResponse.volume,
-        collateralTokenId: FUNGIBLE_TOKEN_ACCOUNT_ID,
+        collateralTokenId: graphResponse.pool.collateral_token_id,
         collateralToken,
         outcomeTokens: transformToTokenViewModels(
             graphResponse.outcome_tags,
