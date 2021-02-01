@@ -1,6 +1,6 @@
 import { formatCollateralToken } from "../../../../../services/CollateralTokenService";
 import { SwapFormValues } from "../../../../../services/SwapService";
-import BN from "bn.js";
+import Big from "big.js";
 import { BUY, DEFAULT_FEE, ONE } from "../../../../../config";
 
 export interface OverviewValues {
@@ -20,12 +20,12 @@ export default function mutateFormValues(formValues: SwapFormValues): OverviewVa
         }
     }
 
-    const amountInBN = new BN(formValues.amountIn);
-    const amountOutBN = new BN(formValues.amountOut);
-    const rateInOut = formatCollateralToken(amountInBN.mul(ONE).div(amountOutBN).toString());
-    const rateOutIn = formatCollateralToken(amountOutBN.mul(ONE).div(amountInBN).toString());
+    const amountInBN = new Big(formValues.amountIn);
+    const amountOutBN = new Big(formValues.amountOut);
+    const rateInOut = formatCollateralToken(amountInBN.mul(ONE.toString()).div(amountOutBN).toString());
+    const rateOutIn = formatCollateralToken(amountOutBN.mul(ONE.toString()).div(amountInBN).toString());
     const feedAmount = formValues.type === BUY ? formValues.amountIn : formValues.amountOut;
-    const feePaid = formatCollateralToken(new BN(feedAmount).mul(new BN(DEFAULT_FEE)).div(new BN("100")).toString());
+    const feePaid = formatCollateralToken(new Big(feedAmount).mul(new Big(DEFAULT_FEE)).div(new Big("100")).toString());
 
     return {
         rateInOut,
