@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Error from '../../components/Error';
+import TextButton from '../../components/TextButton';
 import { PoolToken, transformPoolTokenToTokenViewModel } from '../../models/PoolToken';
-import { formatCollateralToken } from '../../services/CollateralTokenService';
+import { formatCollateralToken, toCollateralToken } from '../../services/CollateralTokenService';
 import trans from '../../translation/trans';
 import TokenSelect from '../TokenSelect';
 
@@ -25,12 +26,21 @@ export default function ExitPool({
     function handleAmountInChange(value: string) {
         setFormValues({
             ...formValues,
-            amountIn: value,
+            amountIn: value ? toCollateralToken(value) : '',
+            amountInFormatted: value,
         });
     }
 
     function handleSubmit() {
         onExitPool(formValues);
+    }
+
+    function handleBalanceClick() {
+        setFormValues({
+            ...formValues,
+            amountIn: poolToken.balance,
+            amountInFormatted: poolToken.balanceFormatted,
+        });
     }
 
     const errors = validateExitPool(formValues, poolToken);
@@ -42,10 +52,12 @@ export default function ExitPool({
             </p>
             <div className={s.header}>
                 <span>{trans('exitPool.label.youInsert')}</span>
-                <span>{trans('global.balance', {}, true)}: {poolToken.balanceFormatted}</span>
+                <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
+                    {trans('global.balance', {}, true)}: {poolToken.balanceFormatted}
+                </TextButton>
             </div>
             <TokenSelect
-                value={formValues.amountIn}
+                value={formValues.amountInFormatted}
                 onValueChange={handleAmountInChange}
                 onTokenSwitch={() => { }}
                 selectedToken={token}

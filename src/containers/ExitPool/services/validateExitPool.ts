@@ -1,6 +1,5 @@
 import Big from 'big.js';
 import { PoolToken } from '../../../models/PoolToken';
-import { toCollateralToken } from '../../../services/CollateralTokenService';
 import trans from '../../../translation/trans';
 import { ExitPoolFormValues } from './createDefaultExitPoolFormValues';
 
@@ -16,15 +15,12 @@ export default function validateExitPool(formValues: ExitPoolFormValues, poolTok
     }
 
     if (formValues.amountIn !== '') {
-
-        const amountIn = toCollateralToken(formValues.amountIn);
-
-        if (new Big(poolToken.balance).lt(amountIn)) {
+        if (new Big(poolToken.balance).lt(formValues.amountIn)) {
             errors.amountIn = trans('exitPool.validation.amountIn.tooHigh');
             errors.canSubmit = false;
         }
 
-        if (new Big(amountIn).lte(0)) {
+        if (new Big(formValues.amountIn).lte(0)) {
             errors.amountIn = trans('exitPool.validation.amountIn.negative');
             errors.canSubmit = false;
         }
