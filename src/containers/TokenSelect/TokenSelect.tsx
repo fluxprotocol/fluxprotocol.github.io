@@ -8,6 +8,7 @@ import trans from '../../translation/trans';
 import Token from '../../components/Token';
 import NonLinkButton from '../../components/NonLinkButton';
 import TokenDropdown from './components/TokenDropdown/TokenDropdown';
+import Error from '../../components/Error';
 
 interface Props {
     className?: string;
@@ -16,7 +17,7 @@ interface Props {
     value: string;
     error?: string;
     showPrice?: boolean;
-    onValueChange: (newValue: string) => void;
+    onValueChange?: (newValue: string) => void;
     onTokenSwitch: (token: TokenViewModel) => void;
 }
 
@@ -25,7 +26,7 @@ export default function TokenSelect({
     tokens,
     value,
     onTokenSwitch,
-    onValueChange,
+    onValueChange = () => {},
     showPrice = true,
     className = '',
 }: Props) {

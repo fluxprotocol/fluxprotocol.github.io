@@ -37,8 +37,6 @@ import iconBeer from '../assets/images/icons/icon-beer.svg';
 import { MarketCategory } from "../models/Market";
 import trans from '../translation/trans';
 
-console.log('[] circlePolitics -> ', cardPolitics);
-
 interface CategoryInfo {
     icon: string;
     cardIcon: string;

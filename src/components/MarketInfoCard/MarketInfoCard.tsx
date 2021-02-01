@@ -19,8 +19,6 @@ export default function MarketInfoCard({
 }: Props): ReactElement {
     const categoryInfo = market.category.length ? market.category.map(category => getCategoryInfo(category)) : [getCategoryInfo()];
 
-    console.log('[] categoryInfo[0].cardIcon -> ', categoryInfo[0].cardIcon);
-
     return (
         <div className={classnames(s.root, className)} style={{ backgroundColor: categoryInfo[0].color }}>
             <div>

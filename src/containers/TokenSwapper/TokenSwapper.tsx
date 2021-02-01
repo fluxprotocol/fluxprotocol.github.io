@@ -17,6 +17,8 @@ import { toCollateralToken } from '../../services/CollateralTokenService';
 import { BUY, SELL } from '../../config';
 
 import swap from "./../../assets/images/icons/swap.svg";
+import { validateSwapFormValues } from './utils/validateSwapFormValues';
+import Error from '../../components/Error';
 
 interface TokenSwapperProps {
     inputs: TokenViewModel[];
@@ -62,11 +64,6 @@ export default function TokenSwapper({
         });
     }
 
-    function handleAmountOutChange(value: string) {
-        // TODO: remove this fn
-    }
-
-    
     // TODO: mutation makes token values after switch go down recursively, should only switch between 2 states
     function switchTokenPlaces() {
         setFormValues({
@@ -84,6 +81,7 @@ export default function TokenSwapper({
 
     const poolTokens = outputs.length > 1 ? outputs : inputs;
     const mutation = mutateFormValues(formValues, poolTokens);
+    const errors = validateSwapFormValues(mutation);
 
     return (
         <form className={classnames(s['token-swapper'], className)}>
@@ -114,7 +112,6 @@ export default function TokenSwapper({
                     value={mutation.formattedAmountOut}
                     tokens={outputs}
                     selectedToken={mutation.toToken}
-                    onValueChange={(v) => handleAmountOutChange(v)}
                 />
             </div>
 
@@ -125,7 +122,9 @@ export default function TokenSwapper({
                 <SwapOverview formValues={mutation}/>
             </div>
 
-            <Button onClick={() => handleSubmit(mutation)} className={s['token-swapper__confirm']}>
+            <Error error={errors.message} />
+
+            <Button disabled={!errors.canSubmit} onClick={() => handleSubmit(mutation)} className={s['token-swapper__confirm']}>
                 {trans('market.action.confirmSwap')}
             </Button>
         </form>

@@ -117,6 +117,8 @@
     "priceHistory.labels.1m": "1M",
     "priceHistory.labels.all": "ALL",
 
+    "swap.errors.notEnoughBalance": "Not enough balance",
+
     "auth.login": "Login",
 
     "navigation.back": "Back",
