@@ -113,6 +113,8 @@
     "seedPool.label.mainTokenBalance": "NEAR input",
     "seedPool.errors.notEnoughBalance": "Not enough balance",
 
+    "liquidityProvider.errors.notEnoughBalance": "Not enough balance",
+
     "priceHistory.labels.1d": "1D",
     "priceHistory.labels.1w": "1W",
     "priceHistory.labels.3w": "3W",
