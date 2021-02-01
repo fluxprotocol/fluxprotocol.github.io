@@ -43,7 +43,7 @@ export function validateSeedPool(formValues: SeedPoolFormValues, market: MarketV
     }
 
     if (formValues.mainTokenInput) {
-        const inputAmount = toCollateralToken(formValues.mainTokenInput);
+        const inputAmount = formValues.mainTokenInput;
 
         if (new Big(inputAmount).lte(0)) {
             errors.canSeed = false;

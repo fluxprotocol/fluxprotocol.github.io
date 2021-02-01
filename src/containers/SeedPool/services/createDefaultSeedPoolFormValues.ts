@@ -4,5 +4,6 @@ export default function createDefaultSeedPoolFormValues(): SeedPoolFormValues {
     return {
         outcomePercentages: [],
         mainTokenInput: '',
+        mainTokenInputFormatted: '',
     };
 }

@@ -16,6 +16,8 @@ import { SeedPoolFormValues } from '../../services/PoolService';
 
 import s from './SeedPool.module.scss';
 import Error from '../../components/Error';
+import TextButton from '../../components/TextButton';
+import { toCollateralToken } from '../../services/CollateralTokenService';
 
 interface Props {
     market: MarketViewModel;
@@ -47,7 +49,16 @@ export default function SeedPool({
     function handleMainTokenChange(value: string) {
         setFormValues({
             ...formValues,
-            mainTokenInput: value,
+            mainTokenInputFormatted: value,
+            mainTokenInput: value ? toCollateralToken(value) : '',
+        });
+    }
+
+    function handleBalanceClick() {
+        setFormValues({
+            ...formValues,
+            mainTokenInputFormatted: mainToken.balanceFormatted,
+            mainTokenInput: mainToken.balance,
         });
     }
 
@@ -70,12 +81,14 @@ export default function SeedPool({
 
                     <div className={s.inputWrapper}>
                         <div className={s.tokenTitles}>
-                            <span>{trans('global.balance', {}, true)}: {mainToken.balanceFormatted}</span>
+                            <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
+                                {trans('global.balance', {}, true)}: {mainToken.balanceFormatted}
+                            </TextButton>
                         </div>
 
                         <TokenSelect
                             onTokenSwitch={() => {}}
-                            value={formValues.mainTokenInput.toString()}
+                            value={formValues.mainTokenInputFormatted}
                             tokens={[mainToken]}
                             selectedToken={mainToken}
                             onValueChange={handleMainTokenChange}
