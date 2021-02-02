@@ -47,7 +47,7 @@ export default function TokenSelect({
         <div className={classnames(s['token-select'], className)}>
             <div className={s['token-select__info']}>
                 <span>{selectedToken.tokenName} {trans('global.token')}</span>
-                {showPrice && <span>${selectedToken.price}</span>}
+                {showPrice && <span>${selectedToken.price.toFixed(3)}</span>}
                 {!showPrice && <span />}
             </div>
             <div className={s['token-select__inputs']}>

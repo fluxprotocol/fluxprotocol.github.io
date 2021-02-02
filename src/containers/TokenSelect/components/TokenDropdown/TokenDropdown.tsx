@@ -29,7 +29,7 @@ export default function TokenDropdown({
                                 <span>{token.tokenName}</span>
                             </div>
                             <div className={s['token-dropdown__token-balance']}>
-                                {token.balance}
+                                {token.balanceFormatted}
                             </div>
                         </button>
                     ))}
