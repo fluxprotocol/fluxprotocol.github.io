@@ -1,4 +1,5 @@
 import BN from 'bn.js';
+import Big from 'big.js';
 
 export const API_URL = process.env.REACT_APP_API_URL || '';
 export const NULL_CONTRACT = 'null_contract.flux-dev';
@@ -15,3 +16,5 @@ export const DEFAULT_FEE = 2; // 2%
 export const DEFAULT_SLIPPAGE = 2; // 2%
 
 export const DEFAULT_LIMIT = 100;
+
+Big.PE = 1000000;
