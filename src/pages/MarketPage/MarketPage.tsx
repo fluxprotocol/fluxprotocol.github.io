@@ -59,12 +59,12 @@ export default function MarketPage() {
                         items={[{
                             element: <TokenSwapperConnector key="tokenswapper" />,
                             label: trans('market.label.swap'),
-                            show: account !== null && market?.public === true && market?.finalized === false,
+                            show: account !== null && market?.public === true && market?.finalized === false && market.resolutionDate > new Date(),
                             id: '0',
                         }, {
                             element: <LiquidityProviderConnector key="liquidity" />,
                             label: trans('market.label.liquidity'),
-                            show: account !== null && market?.public === true && market?.finalized === false,
+                            show: account !== null && market?.public === true && market?.finalized === false && market.resolutionDate > new Date(),
                             id: '1',
                         }, {
                             element: <ClaimEarningsConnector key="claimEarnings" />,
@@ -79,12 +79,12 @@ export default function MarketPage() {
                         }, {
                             element: <MarketClosed key="marketClosed" />,
                             label: trans('market.label.marketClosed'),
-                            show: account !== null && market?.finalized === false && market.resolutionDate <= new Date(),
+                            show: market?.finalized === false && market.resolutionDate <= new Date(),
                             id: '4',
                         }, {
                             element: <ExitPoolConnector key="exitPool" />,
                             label: trans('market.label.exitPool'),
-                            show: account !== null && market?.public === true && !!poolToken,
+                            show: (account !== null && market?.finalized === true) || (account !== null && market?.public === true && !!poolToken && market.resolutionDate > new Date()),
                             id: '5',
                         }, {
                             element: <NotLoggedInConnector key="notloggedin" />,
