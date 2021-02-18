@@ -18,6 +18,7 @@
     "menu.logout": "Logout",
     "menu.profile": "Profile",
     "menu.wrapNear": "Wrap NEAR",
+    "menu.disclaimer": "By using this non-custodial application you are acknowledging that this application is unaudited.",
 
     "home.title.head": ":appName - Markets",
     "home.title.welcome": "Welcome :username",

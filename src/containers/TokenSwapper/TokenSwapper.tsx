@@ -38,7 +38,7 @@ export default function TokenSwapper({
     className = '',
 }: TokenSwapperProps): ReactElement {
     const [formValues, setFormValues] = useState(createDefaultSwapFormValues(inputs[0], outputs[0]));
-
+    const collateralToken = inputs.length == 1 ? inputs[0] : outputs[0];
     function handleSubmit(mutatedValues: SwapFormValues) {
         onConfirm(mutatedValues);
     }
@@ -61,7 +61,7 @@ export default function TokenSwapper({
         setFormValues({
             ...formValues,
             formattedAmountIn: value,
-            amountIn: value ? toCollateralToken(value) : ""
+            amountIn: value ? toCollateralToken(value, collateralToken.decimals) : ""
         });
     }
 

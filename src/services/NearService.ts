@@ -95,7 +95,7 @@ export async function unwrapNear(amountIn: string) {
 export async function getWrappedNearStorageBalance() {
     const wNearContract = await createWrappedNearContract();
     const sdk = await connectSdk();
-
+    
     return wNearContract.getStorageBalance(sdk.getAccountId());
 }
 

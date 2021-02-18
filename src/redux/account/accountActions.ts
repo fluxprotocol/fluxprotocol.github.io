@@ -34,11 +34,14 @@ export function loadNearBalances() {
         const nearTokenRequest = getNearToken();
         const wrappedNeartokenRequest = getWrappedNearToken();
 
-        const storageUsage = await getWrappedNearStorageBalance();
-
-        if (storageUsage.total === '0') {
-            const requiredDeposit = await getRequiredWrappedNearStorageDeposit();
-            dispatch(setRequiredWrappedNearDeposit(requiredDeposit));
+        let accountInfo = await getAccountInfo();
+        if (accountInfo !== null) {
+            const storageUsage = await getWrappedNearStorageBalance();
+    
+            if (storageUsage.total === '0') {
+                const requiredDeposit = await getRequiredWrappedNearStorageDeposit();
+                dispatch(setRequiredWrappedNearDeposit(requiredDeposit));
+            }
         }
 
         const nearToken = await nearTokenRequest;

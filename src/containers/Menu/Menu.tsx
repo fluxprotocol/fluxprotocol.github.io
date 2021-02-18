@@ -89,6 +89,7 @@ export default function Menu({
                     )}
                 </div>
             </div>
+            <div className={s.menu__subheader}>{trans('menu.disclaimer')}</div>
         </header>
     );
 }

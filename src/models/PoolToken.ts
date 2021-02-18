@@ -36,7 +36,7 @@ export interface PoolToken {
 
 export function transformToPoolToken(graphData: EarnedFeesGraphData, collateralTokenMetadata: TokenMetadata): PoolToken {
     return {
-        balanceFormatted: formatCollateralToken(graphData.balance, 18),
+        balanceFormatted: formatCollateralToken(graphData.balance, collateralTokenMetadata.decimals),
         balance: graphData.balance,
         fees: graphData.fees,
         marketDescription: graphData.market?.description ?? '',

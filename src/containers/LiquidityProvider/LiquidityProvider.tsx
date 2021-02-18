@@ -32,7 +32,7 @@ export default function LiquidityProvider({
     function handleInChange(value: string) {
         setFormValues({
             ...formValues,
-            liquidityAmountIn: value ? toCollateralToken(value) : '',
+            liquidityAmountIn: value ? toCollateralToken(value, token.decimals) : '',
             liquidityAmountInFormatted: value,
         });
     }

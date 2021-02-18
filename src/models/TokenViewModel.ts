@@ -68,7 +68,7 @@ export function transformToTokenViewModels(
     collateralToken?: TokenViewModel,
 ): TokenViewModel[] {
     const poolBalances = transformToPoolBalanceViewModel(poolBalanceData, tags);
-
+    
     return tags.map((outcome, outcomeId) => {
         const poolBalance = poolBalances.find(poolBalance => poolBalance.outcomeId === outcomeId);
         const userBalance = userBalances.find(userBalance => userBalance.outcomeId === outcomeId);
