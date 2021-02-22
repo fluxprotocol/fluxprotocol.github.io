@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
+const DEFAULT_THEME = 'light';
+
 export const themeContext = React.createContext({
     toggleTheme: () => {},
-    theme: 'dark',
+    theme: DEFAULT_THEME,
 });
 
 function setModeOnRoot(mode: string) {
@@ -10,7 +12,7 @@ function setModeOnRoot(mode: string) {
 }
 
 export const useDarkMode = () => {
-    const [theme, setTheme] = useState<string>('dark');
+    const [theme, setTheme] = useState<string>(DEFAULT_THEME);
 
     const setMode = (mode: 'light' | 'dark') => {
         window.localStorage.setItem('theme', mode);

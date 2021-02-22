@@ -31,12 +31,6 @@ html, body {
 $darkmode-enabled: true;
 
 @mixin darkmode-variables {
-//   --c-primary:    #{$c-white};
-}
-
-:root {
-    --f-primary: #{$f-primary};
-    --c-primary: #{$c-primary};
     --c-secondary: rgb(#{$c-secondary-rgb});
     --c-secondary-rgb: #{$c-secondary-rgb};
     --c-black: #{$c-black};
@@ -60,6 +54,34 @@ $darkmode-enabled: true;
     --c-dark-purple: #{$c-dark-purple};
 
     --i-background-wave: url('../assets/images/background-wave-dark.svg');
+}
+
+:root {
+    --f-primary: #{$f-primary};
+    --c-primary: #{$c-primary};
+    --c-secondary: rgb(#{$c-secondary-rgb});
+    --c-secondary-rgb: #{$c-secondary-rgb};
+    --c-black: #{$c-black};
+    --c-white: rgb(#{$c-white-rgb});
+    --c-white-rgb: #{$c-white-rgb};
+    --c-text: #{$c-black};
+    --c-primary-dark: #{$c-primary-dark};
+    --c-tertiary: #{$c-tertiary};
+    --c-background: rgb(#{$c-white-rgb});
+    --c-confirm-button: #{$c-confirm-button};
+
+    --c-red: #{$c-red};
+    --c-green: #{$c-green};
+    --c-gray: #{$c-gray};
+
+    --c-light-purple: #{$c-light-purple};
+    --c-pink: #{$c-pink};
+    --c-purple: #{$c-purple};
+    --c-blue: #{$c-blue};
+    --c-medium-blue: #{$c-medium-blue};
+    --c-dark-purple: #{$c-dark-purple};
+
+    --i-background-wave: url('../assets/images/background-wave-light.svg');
 }
 
 html {
