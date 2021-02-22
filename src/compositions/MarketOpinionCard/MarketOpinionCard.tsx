@@ -34,7 +34,9 @@ export default function MarketOpinionCard({
             </div>
             <div className={s['volume-wrapper']}>
                 <span>{trans('market.label.totalVolume')}</span>
-                <span>{prettyFormatNumber(formatCollateralToken(market.volume, market.collateralToken.decimals))}</span>
+                <span>
+                    {prettyFormatNumber(formatCollateralToken(market.volume, market.collateralToken.decimals))} {market.collateralToken.tokenSymbol}
+                </span>
             </div>
         </div>
     );
