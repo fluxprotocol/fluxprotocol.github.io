@@ -1,24 +1,32 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import MarketOverview from '../../containers/MarketOverview';
 import { MarketFilters } from '../../services/MarketService';
-import { MarketCategory } from '../../models/Market';
+import { MarketCategory, MarketViewModel } from '../../models/Market';
 import { Reducers } from '../../redux/reducers';
-import { routePaths } from '../../routes';
-import { fetchMarkets } from '../../redux/market/marketActions';
 import { DEFAULT_LIMIT } from '../../config';
 
+interface Props {
+    rootPath: string;
+    markets: MarketViewModel[];
+    defaultMarketFilters: MarketFilters;
+    onRequestFetchMarkets: (filters: MarketFilters, append: boolean) => void;
+}
 
-export default function MarketOverviewConnector(): ReactElement {
-    const dispatch = useDispatch();
-    const markets = useSelector((store: Reducers) => store.market.markets);
+export default function MarketOverviewConnector({
+    rootPath,
+    markets,
+    defaultMarketFilters,
+    onRequestFetchMarkets,
+}: Props): ReactElement {
     const loading = useSelector((store: Reducers) => store.market.marketLoading);
     const history = useHistory();
     const location = useLocation();
     const offset = useRef<number>(0);
     const [filters, setFilters] = useState<MarketFilters>({
         categories: [],
+        ...defaultMarketFilters,
     });
 
     // Changes just the query params
@@ -31,7 +39,7 @@ export default function MarketOverviewConnector(): ReactElement {
             });
         }
 
-        history.replace(`${routePaths.root()}?${queryParams.toString()}`);
+        history.replace(`${rootPath}?${queryParams.toString()}`);
     }
 
     // Listens for a query change and adapts the internal state
@@ -43,7 +51,8 @@ export default function MarketOverviewConnector(): ReactElement {
             limit: DEFAULT_LIMIT,
             categories: queryParams.getAll('categories') as MarketCategory[],
         };
-        dispatch(fetchMarkets(newActiveFilters));
+
+        onRequestFetchMarkets(newActiveFilters, false);
         setFilters(newActiveFilters);
     }, [location]);
 
@@ -56,7 +65,7 @@ export default function MarketOverviewConnector(): ReactElement {
             limit: DEFAULT_LIMIT,
         };
 
-        dispatch(fetchMarkets(newActiveFilters, true));
+        onRequestFetchMarkets(newActiveFilters, true);
     }
 
     return (

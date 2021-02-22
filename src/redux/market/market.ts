@@ -7,6 +7,7 @@ import { TokenViewModel } from '../../models/TokenViewModel';
 export type MarketState = Readonly<{
     markets: MarketViewModel[];
     resolutingMarkets: MarketViewModel[];
+    pendingMarkets: MarketViewModel[];
     marketDetail?: MarketViewModel;
     marketError?: string[];
     marketLoading: boolean;
@@ -19,6 +20,7 @@ const initialState: MarketState = {
     marketLoading: false,
     editLoading: false,
     markets: [],
+    pendingMarkets: [],
     resolutingMarkets: [],
     tokenWhitelist: [],
 };
@@ -51,6 +53,18 @@ const marketsSlice = createSlice({
                 editLoading: action.payload,
             });
         },
+        setPendingMarkets(state: MarketState, action: PayloadAction<MarketViewModel[]>): MarketState {
+            return ({
+                ...state,
+                pendingMarkets: action.payload,
+            });
+        },
+        appendPendingMarkets(state: MarketState, action: PayloadAction<MarketViewModel[]>): MarketState {
+            return ({
+                ...state,
+                pendingMarkets: [...action.payload, ...state.pendingMarkets],
+            });
+        },
         setMarkets(state: MarketState, action: PayloadAction<MarketViewModel[]>): MarketState {
             return ({
                 ...state,
@@ -67,6 +81,12 @@ const marketsSlice = createSlice({
             return ({
                 ...state,
                 resolutingMarkets: action.payload,
+            });
+        },
+        appendResolutingMarkets(state: MarketState, action: PayloadAction<MarketViewModel[]>): MarketState {
+            return ({
+                ...state,
+                resolutingMarkets: [...action.payload, ...state.resolutingMarkets],
             });
         },
         setMarketDetail(state: MarketState, action: PayloadAction<MarketViewModel | undefined>): MarketState {
@@ -108,6 +128,9 @@ export const {
     setMarketPoolTokenBalance,
     setMarketDetailTokens,
     setTokenWhitelist,
+    appendPendingMarkets,
+    setPendingMarkets,
+    appendResolutingMarkets,
 } = marketsSlice.actions;
 
 export default marketsSlice.reducer;

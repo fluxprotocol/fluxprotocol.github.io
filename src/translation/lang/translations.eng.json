@@ -13,7 +13,8 @@
     "global.actions.createMarket": "Create market",
 
     "pages.marketOverview": "Trade",
-    "pages.resoluteOverview": "Resoluted",
+    "pages.resoluteOverview": "Finalized",
+    "pages.pendingOverview": "Pending",
 
     "menu.logout": "Logout",
     "menu.profile": "Profile",
@@ -107,7 +108,8 @@
 
     "marketClosed.description": "This market has ended. Resolution is currently in progress, come back later to claim your earnings.",
 
-    "marketResolution.title.head": ":appName - Resolute",
+    "marketPeding.title.head": ":appName - Pending",
+    "marketResolution.title.head": ":appName - Finalized",
 
     "liquidityProvider.description": "Liquidity providers earn a :percentage% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.",
 

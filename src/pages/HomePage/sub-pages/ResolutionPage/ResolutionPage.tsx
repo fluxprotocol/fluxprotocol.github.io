@@ -1,18 +1,10 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
-import { useDispatch } from 'react-redux';
-import MarketResolutionOverviewConnector from '../../../../connectors/MarketResolutionOverviewConnector';
-import { fetchResolutingMarkets } from '../../../../redux/market/marketActions';
+import FinalizedMarketsOverviewConnector from '../../../../connectors/FinalizedMarketsOverviewConnector';
 import trans from '../../../../translation/trans';
 
 
 export default function ResolutionPage(): ReactElement {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchResolutingMarkets());
-    }, [dispatch]);
-
     return (
         <section>
             <Helmet>
@@ -22,7 +14,7 @@ export default function ResolutionPage(): ReactElement {
                     })}
                 </title>
             </Helmet>
-            <MarketResolutionOverviewConnector />
+            <FinalizedMarketsOverviewConnector />
         </section>
     );
 }

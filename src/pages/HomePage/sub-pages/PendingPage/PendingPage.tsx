@@ -1,20 +1,20 @@
 import React, { ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
-import TradeableMarketsOverviewConnector from '../../../../connectors/TradeableMarketsOverviewConnector';
+import PendingMarketsOverviewConnector from '../../../../connectors/PendingMarketsOverviewConnector';
 import trans from '../../../../translation/trans';
 
 
-export default function MarketsOverviewPage(): ReactElement {
+export default function PendingPage(): ReactElement {
     return (
         <section>
             <Helmet>
                 <title>
-                    {trans('home.title.head', {
+                    {trans('marketResolution.title.head', {
                         appName: trans('global.appName'),
                     })}
                 </title>
             </Helmet>
-            <TradeableMarketsOverviewConnector />
+            <PendingMarketsOverviewConnector />
         </section>
     );
 }

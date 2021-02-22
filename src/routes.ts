@@ -14,6 +14,7 @@ export const routePaths = {
     root: () => '/',
     profile: () => '/profile',
     resoluted: () => '/resoluted',
+    pending: () => '/pending',
     marketDetail: (marketId = ':marketId') => `/markets/${marketId}`,
 }
 

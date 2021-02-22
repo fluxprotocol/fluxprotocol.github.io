@@ -15,6 +15,7 @@ import MarketCreationDialogConnector from '../../connectors/MarketCreationDialog
 
 import s from './HomePage.module.scss';
 import HomeHeaderConnector from '../../connectors/HomeHeaderConnector';
+import PendingPage from './sub-pages/PendingPage';
 
 
 export default function HomePage() {
@@ -40,6 +41,10 @@ export default function HomePage() {
                     label: trans('pages.marketOverview'),
                     show: true,
                 }, {
+                    id: routePaths.pending(),
+                    label: trans('pages.pendingOverview'),
+                    show: true,
+                }, {
                     id: routePaths.resoluted(),
                     label: trans('pages.resoluteOverview'),
                     show: true,
@@ -49,6 +54,7 @@ export default function HomePage() {
             <Switch>
                 <Route exact path={routePaths.root()} component={MarketsOverviewPage} />
                 <Route exact path={routePaths.resoluted()} component={ResolutionPage} />
+                <Route exact path={routePaths.pending()} component={PendingPage} />
             </Switch>
         </Page>
     );
