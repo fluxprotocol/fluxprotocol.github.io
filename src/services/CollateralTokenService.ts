@@ -81,6 +81,7 @@ export async function getCollateralTokenMetadata(collateralTokenId: string): Pro
         });
 
         return {
+            ...defaultMetadata,
             ...metadata,
             collateralTokenId,
         };
