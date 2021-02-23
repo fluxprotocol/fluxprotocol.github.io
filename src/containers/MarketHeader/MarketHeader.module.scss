@@ -80,6 +80,8 @@
 
 .market-header {
     &__back-button {
+        background-color: var(--c-tertiary);
+        color: var(--c-white);
         margin-bottom: 1rem;
     }
 

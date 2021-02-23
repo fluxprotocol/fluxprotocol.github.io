@@ -6,8 +6,6 @@ import MenuConnector from "../../connectors/MenuConnector";
 
 import styles from './Page.module.scss';
 import WrapNearDialogConnector from "../../connectors/WrapNearDialogConnector";
-import { useDarkModeThemeContext } from "../../utils/hooks/useDarkModeTheme";
-import { Helmet } from "react-helmet";
 interface Props {
     className?: string;
     bodyClassName?: string;
@@ -24,7 +22,6 @@ export default function Page({
     className = '',
     bodyClassName = '',
 }: PropsWithChildren<Props>): ReactElement {
-    const { theme } = useDarkModeThemeContext();
     const pageBodyClassName = classnames(styles.page__body, bodyClassName, {
         [styles['page__body--large']]: size === 'large',
         [styles['page__body--unrestricted']]: size === 'unrestricted',
@@ -32,8 +29,6 @@ export default function Page({
 
     return (
         <div className={`${styles.page} ${className}`}>
-            <Helmet htmlAttributes={{ 'data-theme': theme }} />
-
             {/* Normally don't put connectors in containers.. */}
             {hasNavigation && <MenuConnector />}
             <WrapNearDialogConnector />

@@ -27,10 +27,9 @@ html, body {
     }
 }
 
-// Darkmode
-$darkmode-enabled: true;
-
 @mixin darkmode-variables {
+    --f-primary: #{$f-primary};
+    --c-primary: #{$c-primary};
     --c-secondary: rgb(#{$c-secondary-rgb});
     --c-secondary-rgb: #{$c-secondary-rgb};
     --c-black: #{$c-black};
@@ -54,18 +53,21 @@ $darkmode-enabled: true;
     --c-dark-purple: #{$c-dark-purple};
 
     --i-background-wave: url('../assets/images/background-wave-dark.svg');
+    --i-logo: url('../assets/images/flux-logo-white.png');
+
+    --filter-icon: brightness(1);
 }
 
-:root {
+@mixin lightmode-variables {
     --f-primary: #{$f-primary};
     --c-primary: #{$c-primary};
-    --c-secondary: rgb(#{$c-secondary-rgb});
-    --c-secondary-rgb: #{$c-secondary-rgb};
+    --c-secondary: #EEF4F6;
+    --c-secondary-rgb: 238,244,246;
     --c-black: #{$c-black};
     --c-white: rgb(#{$c-white-rgb});
     --c-white-rgb: #{$c-white-rgb};
     --c-text: #{$c-black};
-    --c-primary-dark: #{$c-primary-dark};
+    --c-primary-dark: rgb(#{$c-white-rgb});
     --c-tertiary: #{$c-tertiary};
     --c-background: rgb(#{$c-white-rgb});
     --c-confirm-button: #{$c-confirm-button};
@@ -82,16 +84,19 @@ $darkmode-enabled: true;
     --c-dark-purple: #{$c-dark-purple};
 
     --i-background-wave: url('../assets/images/background-wave-light.svg');
+    --i-logo: url('../assets/images/flux-logo-black.png');
+
+    --filter-icon: brightness(0);
 }
 
 html {
-    @if $darkmode-enabled {
-        @media (prefers-color-scheme: dark) {
-            @include darkmode-variables;
-        }
+    @include lightmode-variables;
 
-        &[data-theme="dark"] {
-            @include darkmode-variables;
-        }
+    @media (prefers-color-scheme: dark) {
+        @include darkmode-variables;
+    }
+
+    &[data-theme="dark"] {
+        @include darkmode-variables;
     }
 }

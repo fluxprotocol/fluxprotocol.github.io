@@ -1,6 +1,6 @@
 .root {
     background-color: var(--c-primary-dark);
-    color: var(--c-white);
+    color: var(--c-text);
     width: fit-content;
     display: flex;
     justify-content: center;
@@ -27,5 +27,5 @@
 
 .title {
     margin-right: 0.3125rem;
-    font-weight: 100;
+    font-weight: 400;
 }

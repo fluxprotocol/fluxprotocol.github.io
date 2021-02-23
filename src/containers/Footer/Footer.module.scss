@@ -22,12 +22,17 @@
 
 .logo {
     width: 5.625rem;
+    height: 2.5rem;
+    background-size: 100%;
+    background-image: var(--i-logo);
 }
 
 .social {
     margin-right: 1.25rem;
+    filter: var(--filter-icon);
 
     &:last-child {
         margin-right: 0;
     }
 }
+

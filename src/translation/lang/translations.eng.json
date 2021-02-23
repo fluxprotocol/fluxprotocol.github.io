@@ -16,7 +16,7 @@
     "pages.resoluteOverview": "Resoluted",
 
     "menu.logout": "Logout",
-    "menu.profile": "Profile",
+    "menu.profile": "Positions",
     "menu.wrapNear": "Wrap NEAR",
     "menu.disclaimer": "By using this non-custodial application you are acknowledging that this application is unaudited.",
 
@@ -49,7 +49,7 @@
     "market.action.confirmSwap": "Confirm swap",
     "market.action.confirmLiquidity": "Add liquidity",
     "market.action.switchTokens": "Switch tokens",
-    "market.action.changeTradingPair": "Change trading pair",
+    "market.action.changeTradingPair": "Change outcome token",
     "market.action.claimEarnings": "Claim",
 
     "market.label.resolutionInfo": "Resolution info",

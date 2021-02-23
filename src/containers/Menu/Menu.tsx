@@ -4,15 +4,13 @@ import { Link } from "react-router-dom";
 import MuiMenu from '@material-ui/core/Menu';
 import MuiMenuItem from '@material-ui/core/MenuItem';
 
-import fluxLogoBlack from '../../assets/images/flux-logo-black.png';
-import fluxLogoWhite from '../../assets/images/flux-logo-white.png';
-import { useDarkModeThemeContext } from "../../utils/hooks/useDarkModeTheme";
 import Button from "../../components/Button";
 import trans from "../../translation/trans";
 import { Account } from "../../models/Account";
+import { formatCollateralToken } from "../../services/CollateralTokenService";
 
 import s from './Menu.module.scss';
-import { formatCollateralToken } from "../../services/CollateralTokenService";
+
 interface Props {
     className?: string;
     onLoginClick: () => void;
@@ -30,7 +28,6 @@ export default function Menu({
     account,
     className = ''
 }: Props): ReactElement {
-    const { theme } = useDarkModeThemeContext();
     const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
 
     function handleMenuClick(event: FormEvent) {
@@ -61,11 +58,7 @@ export default function Menu({
             <div className={s.menu__items}>
                 <div className={s.menu__item}>
                     <Link to="/">
-                        <img
-                            className={s.menu__logo}
-                            src={theme === 'light' ? fluxLogoBlack : fluxLogoWhite}
-                            alt="Flux home"
-                        />
+                        <div className={s.menu__logo} />
                     </Link>
                 </div>
                 <div className={s.menu__item} />

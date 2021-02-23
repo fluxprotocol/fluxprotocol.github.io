@@ -88,7 +88,7 @@ export default function generateLineChart(canvas: HTMLCanvasElement): Chart | nu
                         drawTicks: false,
                     },
                     ticks: {
-                        fontColor: 'white',
+                        fontColor: getCssVariableValue('--c-text'),
                         min: 0,
                         max: 100,
                         maxTicksLimit: 6,
@@ -104,7 +104,7 @@ export default function generateLineChart(canvas: HTMLCanvasElement): Chart | nu
                         drawTicks: false,
                     },
                     ticks: {
-                        fontColor: 'white',
+                        fontColor: getCssVariableValue('--c-text'),
                         padding: 10,
                     }
                 }],

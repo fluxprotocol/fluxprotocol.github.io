@@ -38,7 +38,7 @@ export default function UserBalancesOverview({
                     {/** Filters out any pool tokens */}
                     {balances.filter(balance => balance.outcomeTag).map((info) => (
                         <tr className={s.tableRow} key={`${info.marketId}_${info.outcomeId}`}>
-                            <td>
+                            <td className={s.marketDescription}>
                                 <Link to={routePaths.marketDetail(info.marketId)} className={s.link}>
                                     {info.marketDescription}
                                 </Link>

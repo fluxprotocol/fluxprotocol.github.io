@@ -39,6 +39,9 @@
 
     &__logo {
         width: 4rem;
+        height: 1.75rem;
+        background-size: 100%;
+        background-image: var(--i-logo);
     }
 
     &__last-item {
@@ -50,5 +53,6 @@
 .accountMenuButton {
     border: 1px solid var(--c-tertiary);
     background-color: transparent;
+    color: var(--c-text);
 }
 
