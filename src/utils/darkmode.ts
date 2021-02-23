@@ -1,3 +1,6 @@
+import { useState } from "react";
+import useInterval from "./hooks/useInterval";
+
 interface ThemePreference {
     userPrefersDark: boolean;
     userPrefersLight: boolean;
@@ -8,6 +11,7 @@ const darkmodeStorageLabel = 'darkmode-active';
 const themeAttribute = 'data-theme';
 const nightStartHour = 20;
 const nightEndHour = 6;
+let modeChangeListener = () => {};
 
 const userThemePreference = (): ThemePreference => {
     const canDetectPreference = Boolean(window.matchMedia);
@@ -41,6 +45,7 @@ const setDarkmode = (state: boolean): void => {
     const siteTheme = shouldBeDarkmode ? 'dark' : 'default';
 
     document.documentElement.setAttribute(themeAttribute, siteTheme);
+    modeChangeListener();
 };
 
 const storeDarkmode = (state: boolean): void => {
@@ -69,10 +74,31 @@ const initDarkmode = (): void => {
     applyDarkmodeAtNight();
 };
 
+const useDarkmode = (): boolean => {
+    const [active, setActive] = useState(false);
+
+    useInterval(() => {
+        const newActive = checkIfDarkmodeIsActive();
+        if (newActive !== active) {
+            setActive(newActive);
+        }
+    }, 10);
+
+    modeChangeListener = () => {
+        const newActive = checkIfDarkmodeIsActive();
+        if (newActive !== active) {
+            setActive(newActive);
+        }
+    }
+
+    return active;
+};
+
 export {
     checkIfDarkmodeIsActive,
     initDarkmode,
     setDarkmode,
     storeDarkmode,
     userThemePreference,
+    useDarkmode,
 };

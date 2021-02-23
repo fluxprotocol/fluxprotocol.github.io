@@ -47,6 +47,7 @@
     &__last-item {
         display: flex;
         justify-content: flex-end;
+        align-items: center;
     }
 }
 
@@ -54,5 +55,6 @@
     border: 1px solid var(--c-tertiary);
     background-color: transparent;
     color: var(--c-text);
+    max-height: 2.5rem;
 }
 

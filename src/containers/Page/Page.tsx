@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement } from "react";
+import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import classnames from 'classnames';
 
 import Footer from "../Footer";
@@ -6,6 +6,7 @@ import MenuConnector from "../../connectors/MenuConnector";
 
 import styles from './Page.module.scss';
 import WrapNearDialogConnector from "../../connectors/WrapNearDialogConnector";
+import { setDarkmode } from "../../utils/darkmode";
 interface Props {
     className?: string;
     bodyClassName?: string;
@@ -26,6 +27,10 @@ export default function Page({
         [styles['page__body--large']]: size === 'large',
         [styles['page__body--unrestricted']]: size === 'unrestricted',
     });
+
+    useEffect(() => {
+        setDarkmode(false);
+    }, []);
 
     return (
         <div className={`${styles.page} ${className}`}>

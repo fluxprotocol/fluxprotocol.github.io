@@ -10,6 +10,7 @@ import { Account } from "../../models/Account";
 import { formatCollateralToken } from "../../services/CollateralTokenService";
 
 import s from './Menu.module.scss';
+import DarkmodeButton from "../../components/DarkmodeButton";
 
 interface Props {
     className?: string;
@@ -63,6 +64,8 @@ export default function Menu({
                 </div>
                 <div className={s.menu__item} />
                 <div className={classnames(s.menu__item, s['menu__last-item'])}>
+                    <DarkmodeButton />
+
                     {account === null && (
                         <Button onClick={onLoginClick}>{trans('auth.login')}</Button>
                     )}
