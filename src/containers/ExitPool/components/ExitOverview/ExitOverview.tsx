@@ -5,7 +5,7 @@ import Overview from '../../../../components/Overview';
 import FluxSdk from '@fluxprotocol/amm-sdk';
 
 
-interface ExitOverviewProps {
+interface Props {
     market: MarketViewModel
     amount: string
 }
@@ -13,7 +13,7 @@ interface ExitOverviewProps {
 export default function ExitOverview({
     market,
     amount
-}: ExitOverviewProps): ReactElement {
+}: Props): ReactElement {
     const poolTokenTotalSupply = new Big(market.poolTokenInfo.totalSupply);
     const relativeBal = amount ? new Big(amount).div(poolTokenTotalSupply) : new Big("0");
 
