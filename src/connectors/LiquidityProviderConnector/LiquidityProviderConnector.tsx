@@ -21,7 +21,7 @@ export default function LiquidityProviderConnector(): ReactElement {
 
     return (
         <LiquidityProvider
-            token={market.collateralToken}
+            market={market}
             onSubmit={onJoinPool}
         />
     );
