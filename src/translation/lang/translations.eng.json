@@ -84,6 +84,7 @@
     "market.overview.inverseRate": "Inverse rate",
     "market.overview.estimatedFee": "Estimated fee",
     "market.overview.maxSlippage": "Max. slippage",
+    "market.overview.maxPayout": "Max. payout",
 
     "market.category.crypto": "Crypto",
     "market.category.esports": "Esports",
