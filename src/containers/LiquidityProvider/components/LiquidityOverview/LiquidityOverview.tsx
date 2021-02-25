@@ -3,6 +3,7 @@ import Big from "big.js";
 import { MarketViewModel } from '../../../../models/Market';
 import Overview from '../../../../components/Overview';
 import FluxSdk from '@fluxprotocol/amm-sdk';
+import trans from '../../../../translation/trans';
 
 
 interface Props {
@@ -20,17 +21,17 @@ export default function LiquidityOverview({
     const data = market.outcomeTokens.map(t => {
         const balance = new Big(t.poolBalance);
         return  {
-            key: t.tokenName + " returned",
+            key: t.tokenName + trans('market.label.spaceTokens'),
             value: FluxSdk.utils.formatToken(collateralIn.minus(collateralIn.mul(balance).div(maxBalance)).toString(), t.decimals)
         }
     });
     
     data.push({
-        key: "LP tokens returned",
+        key: trans('market.label.lp') + trans('market.label.spaceTokens'),
         value: FluxSdk.utils.formatToken(collateralIn.mul(new Big(market.poolTokenInfo.totalSupply)).div(maxBalance).toString(), market.collateralToken.decimals)
     })
 
     return (
-        <Overview data={data} />
+        <Overview data={data} header={trans('market.label.youReceive', {}, true)}/>
     )
 }

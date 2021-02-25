@@ -8,14 +8,18 @@ interface KeyValue {
 }
 
 interface Props {
+    header: String,
     data: KeyValue[]
 }
 
-export default function Overview({data}: Props): ReactElement {
+export default function Overview({
+    data, 
+    header
+}: Props): ReactElement {
     return (
         <div className={s['overview__container']}>
             <div className={s['overview-header']}>
-                <span>{trans('market.label.overview', {}, true)}</span>
+                <span>{ header }</span>
             </div>
             <div className={s['overview']}>
                 {

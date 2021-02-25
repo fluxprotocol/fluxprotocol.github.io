@@ -12,7 +12,7 @@ interface SwapOverviewProps {
 
 export default function SwapOverview({formValues}: SwapOverviewProps): ReactElement {
     let formattedFormValues = mutateFormValues(formValues);
-    
+
     const collateralToken = formValues.fromToken.isCollateralToken ? formValues.fromToken : formValues.toToken;
     const amountIn = new Big(formValues.amountIn);
     const amountOut = new Big(formValues.amountOut);
@@ -44,5 +44,5 @@ export default function SwapOverview({formValues}: SwapOverviewProps): ReactElem
         })
     }
 
-    return <Overview data={overViewData} />;
+    return <Overview data={overViewData} header={trans('market.label.overview', {}, true)} />;
 }
