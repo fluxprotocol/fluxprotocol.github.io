@@ -55,7 +55,7 @@ export default function ExitPool({
                 {trans('exitPool.description')}
             </p>
             <div className={s.header}>
-                <span>{trans('exitPool.label.youInsert')}</span>
+                <span>{trans('exitPool.label.lpTokensToRemove')}</span>
                 <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
                     {trans('global.balance', {}, true)}: {poolToken.balanceFormatted}
                 </TextButton>

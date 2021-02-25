@@ -157,7 +157,7 @@
     "navigation.back": "Back",
 
     "exitPool.description": "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive.",
-    "exitPool.label.youInsert": "You insert",
+    "exitPool.label.lpTokensToRemove": "LP tokens to remove",
     "exitPool.action.exitPool": "Remove liquidity",
     "exitPool.label.feesEarned": "Fees earned: :amount :tokenSymbol",
     "exitPool.validation.amountIn.tooHigh": "Amount can't exceed balance",
