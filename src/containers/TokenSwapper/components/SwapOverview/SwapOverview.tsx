@@ -13,7 +13,6 @@ interface SwapOverviewProps {
 export default function SwapOverview({formValues}: SwapOverviewProps): ReactElement {
     let formattedFormValues = mutateFormValues(formValues);
     const collateralToken = formValues.fromToken.isCollateralToken ? formValues.fromToken : formValues.toToken;
-    console.log(formValues)
     const amountIn = new Big(formValues.amountIn);
     const amountOut = new Big(formValues.amountOut);
     const divisor = new Big("100");
