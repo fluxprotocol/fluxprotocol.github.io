@@ -14,17 +14,6 @@ export default function LiquidityOverview({
     market,
     amount
 }: Props): ReactElement {
-
-    // let pool_balances = self.get_pool_balances();
-    // let max_balance = pool_balances.iter().max().unwrap(); // max_balance = cheapest outcome
-    // let pool_supply = self.pool_token.total_supply();
-
-    // for (i, balance) in pool_balances.iter().enumerate() {
-    //     let remaining = math::div_u128(self.collateral_denomination, math::mul_u128(self.collateral_denomination, total_in, *balance), *max_balance); // remaining = amt_in * balance / max_balance
-    //     outcome_tokens_to_return.insert(i, total_in - remaining);
-    // }
-
-
     const maxBalance = new Big(market.outcomeTokens.reduce((s, t) => new Big(t.poolBalance).gt(new Big(s))  ? t.poolBalance : s, "0"));
     const collateralIn = amount ? new Big(amount) : new Big("0");
 
