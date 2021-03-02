@@ -6,7 +6,7 @@
     "global.token": "Token",
     "global.balance": "Balance",
     "global.comments": "Comments",
-    "global.poopoken": "Liquidity Provider Token",
+    "global.poolToken": "Liquidity Provider Token",
 
     "global.action.cancel": "Cancel",
     "global.action.submit": "Submit",
@@ -67,6 +67,7 @@
 
     "market.label.resolutionInfo": "Resolution Info",
     "market.label.totalVolume": "Total Volume",
+    "market.label.currentEstimate": "Current Estimate",
     "market.label.opinion": "What does the market think?",
     "market.label.youPay": "You pay",
     "market.label.youReceive": "You receive",

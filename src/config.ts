@@ -19,6 +19,7 @@ export const DEFAULT_FEE = 2; // 2%
 export const DEFAULT_SLIPPAGE = 2; // 2%
 export const NODE_ENV = process.env.NODE_ENV;
 export const NETWORK: 'testnet' | 'mainnet' | 'custom' = process.env.REACT_APP_NETWORK as any || 'testnet';
+export const SCALAR_VALUE_DECIMALS = 2;
 
 
 export const DEFAULT_LIMIT = 100;

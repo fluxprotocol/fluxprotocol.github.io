@@ -148,6 +148,6 @@ export async function transformToMainTokenViewModel(
         isCollateralToken: true,
         tokenImage: metadata.tokenImage,
         bound: new Big(0),
-        colorVar: '',
+        colorVar: '--c-blue',
     };
 }

@@ -65,6 +65,6 @@ export function transformPoolTokenToTokenViewModel(pooltoken: PoolToken): TokenV
         weight: 0,
         isCollateralToken: false,
         bound: new Big(0),
-        colorVar: '',
+        colorVar: '--c-blue',
     };
 }

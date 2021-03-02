@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { MarketViewModel } from '../../models/Market';
+import { MarketType, MarketViewModel } from '../../models/Market';
 import { formatResolutionDate } from '../../services/MarketService';
 import trans from '../../translation/trans';
 

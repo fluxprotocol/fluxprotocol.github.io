@@ -315,3 +315,12 @@ export function getScalarBounds(bounds: Big[]): { lowerBound: Big, upperBound: B
         upperBound: sortedBounds[sortedBounds.length - 1],
     }
 }
+
+export function getScalarLongShortTokens(tokens: TokenViewModel[]): { longToken: TokenViewModel, shortToken: TokenViewModel } {
+    const bounds = getScalarBounds(tokens.map(t => t.bound));
+
+    return {
+        longToken: tokens.find(t => t.bound.eq(bounds.upperBound)) as TokenViewModel,
+        shortToken: tokens.find(t => t.bound.eq(bounds.lowerBound)) as TokenViewModel,
+    }
+}
