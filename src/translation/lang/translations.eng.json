@@ -65,6 +65,7 @@
     "market.action.changeTradingPair": "Change Outcome Token",
     "market.action.claimEarnings": "Claim",
 
+    "market.label.estimate": "Estimate",
     "market.label.resolutionInfo": "Resolution Info",
     "market.label.totalVolume": "Total Volume",
     "market.label.scalarRange": "Range",

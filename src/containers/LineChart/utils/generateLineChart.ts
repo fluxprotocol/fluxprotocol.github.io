@@ -3,34 +3,40 @@ import Big from 'big.js';
 import Chart from 'chart.js';
 import { MarketType, MarketViewModel } from '../../../models/Market';
 import { PriceHistoryData } from '../../../models/PriceHistoryData';
-import { getScalarBounds } from '../../../services/MarketService';
+import { getScalarBounds, getScalarLongShortTokens } from '../../../services/MarketService';
+import trans from '../../../translation/trans';
 import { getColorForOutcome } from '../../../utils/getColorForOutcome';
 import getCssVariableValue from '../../../utils/getCssVariableValue';
 
-function generateScalarChartData(priceHistoryData: PriceHistoryData[], market: MarketViewModel): Chart.ChartData {
+function generateScalarChartData(priceHistoryData: PriceHistoryData[], market: MarketViewModel): Chart.ChartDataSets[] {
     const dataSets: Chart.ChartDataSets[] = [];
-    const bounds = getScalarBounds(market.outcomeTokens.map(t => t.bound));
+    const scalarTokens = getScalarLongShortTokens(market.outcomeTokens);
+    const scalarData: number[] = [];
 
     priceHistoryData.forEach((historyData) => {
-        // 1 is always the long token
-        const longPriceOutcome = historyData.dataPoints.find(dp => dp.outcome === 1);
-        const scalarValue = FluxSdk.utils.calcScalarValue(bounds.lowerBound, bounds.upperBound, new Big(longPriceOutcome?.price ?? 0));
+        const longPriceOutcome = historyData.dataPoints.find(dp => dp.outcome === scalarTokens.longToken.outcomeId);
+        const scalarValue = FluxSdk.utils.calcScalarValue(scalarTokens.lowerBound, scalarTokens.upperBound, new Big(longPriceOutcome?.price ?? 0));
 
-        console.log('[] scalarValue -> ', scalarValue.toString());
-
+        scalarData.push(scalarValue.toNumber());
     });
 
-    return {
-        datasets: dataSets,
-    };
+    dataSets.push({
+        data: scalarData,
+        label: trans('market.label.estimate'),
+        fill: false,
+        borderWidth: 2,
+        borderColor: `${getCssVariableValue('--c-blue')}`,
+        cubicInterpolationMode: 'monotone',
+    });
+
+    return dataSets;
 }
 
 export function generateChartData(priceHistoryData: PriceHistoryData[], market: MarketViewModel): Chart.ChartData {
     const outcomeData: Map<number, number[]> = new Map();
-    const dataSets: Chart.ChartDataSets[] = [];
     const isScalar = market.type === MarketType.Scalar;
-
-    if (isScalar) return generateScalarChartData(priceHistoryData, market);
+    const scalarTokens = getScalarLongShortTokens(market.outcomeTokens);
+    const dataSets: Chart.ChartDataSets[] = isScalar ? generateScalarChartData(priceHistoryData, market) : [];
 
     priceHistoryData.forEach((historyData) => {
         historyData.dataPoints.forEach((outcomePriceData) => {
@@ -45,13 +51,27 @@ export function generateChartData(priceHistoryData: PriceHistoryData[], market: 
     });
 
     outcomeData.forEach((data, outcomeId) => {
+        let label: string | undefined = undefined;
+
+        if (isScalar && scalarTokens.longToken.outcomeId === outcomeId) {
+            label = trans('market.outcomes.long')
+        } else if (isScalar && scalarTokens.shortToken.outcomeId === outcomeId) {
+            label = trans('market.outcomes.short')
+        }
+
         dataSets.push({
             data,
+            label,
             fill: false,
+            showLine: !isScalar,
+            pointRadius: isScalar ? 0 : undefined,
             borderWidth: 2,
-            borderColor: `${getCssVariableValue(getColorForOutcome(outcomeId))}`,
+            borderColor: `${getCssVariableValue(getColorForOutcome(outcomeId, isScalar))}`,
             cubicInterpolationMode: 'monotone',
         });
+
+        // Scalar markets do not need a dotted line for price since it's hidden
+        if (isScalar) return;
 
         // Dotted line for latest price
         dataSets.push({
@@ -61,7 +81,7 @@ export function generateChartData(priceHistoryData: PriceHistoryData[], market: 
             borderColor: `${getCssVariableValue(getColorForOutcome(outcomeId))}`,
             borderDash: [2, 5],
             cubicInterpolationMode: 'monotone',
-            hidden: false,
+            hidden: isScalar,
             pointHitRadius: 0,
             pointHoverRadius: 0,
             pointRadius: 0,
@@ -89,8 +109,6 @@ export default function generateLineChart(canvas: HTMLCanvasElement, market: Mar
         max = bounds.upperBound.toNumber();
     }
 
-    console.log('[] min, max -> ', min, max);
-
     const chart = new Chart(context, {
         type: 'line',
 
@@ -112,6 +130,11 @@ export default function generateLineChart(canvas: HTMLCanvasElement, market: Mar
                 point: {
                     // radius: 0,
                 }
+            },
+
+            tooltips: {
+                mode: market.type === MarketType.Scalar ? 'index' : 'point',
+                intersect: false,
             },
 
             scales: {
