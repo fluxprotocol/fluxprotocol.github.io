@@ -176,6 +176,7 @@
 
     "userbalances.title": "Balances",
     "userbalances.table.market": "Market",
+    "userbalances.table.price": "Avg. Price",
     "userbalances.table.outcome": "Outcome",
     "userbalances.table.balance": "Balance",
     "userbalances.table.status": "Status",

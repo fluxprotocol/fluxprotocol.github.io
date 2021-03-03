@@ -7,8 +7,8 @@ import trans from '../../translation/trans';
 import { Link } from 'react-router-dom';
 import { formatCollateralToken } from '../../services/CollateralTokenService';
 import { routePaths } from '../../routes';
-
 import s from './UserBalancesOverview.module.scss';
+import Big from 'big.js';
 
 
 interface Props {
@@ -32,6 +32,7 @@ export default function UserBalancesOverview({
                             <th>{trans('userbalances.table.market')}</th>
                             <th>{trans('userbalances.table.outcome')}</th>
                             <th>{trans('userbalances.table.balance')}</th>
+                            <th>{trans('userbalances.table.price')}</th>
                             <th>{trans('userbalances.table.spent')}</th>
                             <th>{trans('userbalances.table.status')}</th>
                         </tr>
@@ -46,6 +47,7 @@ export default function UserBalancesOverview({
                                 }
                             };
 
+                            const price = new Big(info.spent).div(info.balance).round(2).toString();
                             return (
                                 <tr className={s.tableRow} key={`${info.marketId}_${info.outcomeId}`}>
                                     <td className={s.marketDescription}>
@@ -61,6 +63,11 @@ export default function UserBalancesOverview({
                                     <td>
                                         <Link to={href} className={s.link}>
                                             {formatCollateralToken(info.balance, info.collateralTokenMetadata.decimals)}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={href} className={s.link}>
+                                            {`${price} ${info.collateralTokenMetadata.symbol}`}
                                         </Link>
                                     </td>
                                     <td>
