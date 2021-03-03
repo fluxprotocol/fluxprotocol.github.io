@@ -69,6 +69,6 @@ export function transformToUserBalance(graphData: GraphUserBalancesItem, collate
         marketStatus: getMarketStatus(graphData.market),
         outcomeTag: graphData.market?.outcome_tags[graphData.outcome_id] || '',
         collateralTokenMetadata,
-        outcomePrice: graphData.market?.pool.pool_balances.find(pb => pb.outcome_id === graphData.outcome_id)?.price ?? 0,
+        outcomePrice: graphData.market?.pool.pool_balances?.find(pb => pb.outcome_id === graphData.outcome_id)?.price ?? 0,
     }
 }
