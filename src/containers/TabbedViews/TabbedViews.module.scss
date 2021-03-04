@@ -3,10 +3,15 @@
 
 .tabs {
     margin-bottom: 0.7813rem;
+    padding: 0.9375rem 0.9375rem 0;
 }
 
 .tab {
     @include for-size($default-bigger-screen-breakpoint) {
         min-width: 0;
     }
+}
+
+.view {
+    padding: 0.9375rem;
 }

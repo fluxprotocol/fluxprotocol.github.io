@@ -40,7 +40,11 @@ export default function TabbedView({
                 tabClassName={s.tab}
             />
             <SwipeableViews index={activeId} onChangeIndex={handleIndexChange}>
-                {availableItems.map(item => item.element)}
+                {availableItems.map(item => (
+                    <div className={s.view}>
+                        {item.element}
+                    </div>
+                ))}
             </SwipeableViews>
         </div>
     );
