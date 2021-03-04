@@ -1,6 +1,6 @@
-import { EscrowStatus } from '@fluxprotocol/amm-sdk/dist/models/EscrowStatus';
 import React, { ReactElement } from 'react';
 import Button from '../../components/Button';
+import { EscrowStatus } from '../../models/EscrowStatus';
 import { MarketViewModel } from '../../models/Market';
 import { PoolToken } from '../../models/PoolToken';
 import { formatCollateralToken } from '../../services/CollateralTokenService';

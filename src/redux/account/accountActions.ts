@@ -1,5 +1,5 @@
-import { setAccount, setAccountBalances, setAccountLoading, setAccountPoolTokenLoading, setAccountPoolTokens, setNearToken, setRequiredWrappedNearDeposit, setWrappedNearToken } from "./account";
-import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo } from '../../services/AccountService';
+import { setAccount, setAccountBalances, setAccountLoading, setAccountPoolTokenLoading, setAccountPoolTokens, setNearToken, setRequiredWrappedNearDeposit, setWrappedNearToken, setEscrowStatus } from "./account";
+import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo, fetchEscrowStatus } from '../../services/AccountService';
 import { getNearToken, getRequiredWrappedNearStorageDeposit, getWrappedNearStorageBalance, getWrappedNearToken } from "../../services/NearService";
 
 export function signIn() {
@@ -11,6 +11,21 @@ export function signIn() {
         } catch (error) {
             dispatch(setAccountLoading(false));
             console.error('[signIn]', error);
+        }
+    }
+}
+
+export function getEscrowStatus() {
+    return async (dispatch: Function) => {
+        try {
+            dispatch(setAccountLoading(true));
+            const escrowStatus = await fetchEscrowStatus();
+            dispatch(setEscrowStatus(escrowStatus));
+            dispatch(setAccountLoading(false));
+
+        } catch (error) {
+            dispatch(setAccountLoading(false));
+            console.error('[fetchEscrowStatus]', error);
         }
     }
 }

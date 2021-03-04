@@ -1,5 +1,5 @@
-import { EscrowStatus } from '@fluxprotocol/amm-sdk/dist/models/EscrowStatus';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { EscrowStatus } from '../../models/EscrowStatus';
 import { MarketViewModel } from '../../models/Market';
 import { PoolToken } from '../../models/PoolToken';
 import { TokenMetadata } from '../../models/TokenMetadata';

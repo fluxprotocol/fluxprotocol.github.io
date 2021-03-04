@@ -4,6 +4,7 @@ import Big from 'big.js';
 import { format } from 'date-fns';
 import { DEFAULT_FEE } from '../config';
 import { Account } from '../models/Account';
+import { EscrowStatus, transformEscrowStatusViewModel } from "../models/EscrowStatus";
 
 import { GraphMarketResponse, MarketCategory, MarketType, MarketViewModel, transformToMarketViewModel } from '../models/Market';
 import { TokenMetadata } from '../models/TokenMetadata';
@@ -302,9 +303,10 @@ export async function getTokenWhiteListWithDefaultMetadata(): Promise<TokenMetad
     return whitelist.map(token => createDefaultTokenMetadata(token.tokenId));
 }
 
-export async function getEscrowStatus(marketId: string, accountId: string) {
+export async function getEscrowStatus(marketId: string, accountId: string): Promise<EscrowStatus[]> {
     const sdk = await connectSdk();
-    return sdk.getEscrowStatus(marketId, accountId);
+    const escrowStatus = await sdk.getEscrowStatus(accountId, marketId)
+    return transformEscrowStatusViewModel(escrowStatus);
 }
 
 export function getScalarBounds(bounds: Big[]): { lowerBound: Big, upperBound: Big } {

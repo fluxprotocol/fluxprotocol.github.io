@@ -1,5 +1,5 @@
-import { EscrowStatus } from "@fluxprotocol/amm-sdk/dist/models/EscrowStatus";
 import Big from "big.js";
+import { EscrowStatus } from "../../../models/EscrowStatus";
 import { PoolToken } from "../../../models/PoolToken";
 import { TokenViewModel } from "../../../models/TokenViewModel";
 
@@ -42,7 +42,7 @@ export function calculatePayout(
         });
 
         if (escrowValidMarket) {
-            claimable = claimable.add(escrowValidMarket.total_amount);
+            claimable = claimable.add(escrowValidMarket.totalAmount);
         }
     } else {
         // Return total spent + escrow.invalid

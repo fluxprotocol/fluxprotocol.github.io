@@ -209,5 +209,10 @@
     "userbalances.table.balance": "Balance",
     "userbalances.table.status": "Status",
     "userbalances.table.spent": "Spent",
-    "userbalances.table.profit": "Profit"
+    "userbalances.table.profit": "Profit",
+
+    "escrowStatus.title": "Validity Escrow",
+    "escrowStatus.table.market": "market",
+    "escrowStatus.table.amount": "amount",
+    "escrowStatus.table.payoutState": "if market is"
 }

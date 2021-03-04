@@ -7,6 +7,7 @@ import createAuthContract from "./contracts/AuthContract";
 import { graphqlClient } from "./GraphQLService";
 import { connectSdk } from "./WalletService";
 import { ENABLE_WHITELIST } from "../config";
+import { EscrowStatus, transformEscrowStatusViewModel } from "../models/EscrowStatus";
 
 export async function signUserIn() {
     const sdk = await connectSdk();
@@ -34,6 +35,13 @@ export async function getAccountInfo(): Promise<Account | null> {
         canUseApp,
     };
 }
+
+
+export async function fetchEscrowStatus(): Promise<EscrowStatus[]> {
+    const sdk = await connectSdk();
+    const escrowStatus = await sdk.getEscrowStatus("fluxbux.near");
+    return transformEscrowStatusViewModel(escrowStatus);
+};
 
 export async function signUserOut() {
     const sdk = await connectSdk();

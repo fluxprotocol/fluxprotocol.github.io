@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import EscrowOverviewConnector from '../../connectors/EscrowOverviewConnector';
 import FeesEarnedOverviewConnector from '../../connectors/FeesEarnedOverviewConnector';
 import UserBalancesOverviewConnector from '../../connectors/UserBalancesOverviewConnector';
 import Page from '../../containers/Page';
@@ -23,6 +24,7 @@ export default function ProfilePage(): ReactElement {
         <Page className={s.root} bodyClassName={s.pageBody} size="large">
             <UserBalancesOverviewConnector className={s.userBalances} />
             <FeesEarnedOverviewConnector className={s.feesEarned} />
+            <EscrowOverviewConnector className={s.feesEarned} />
         </Page>
     );
 }

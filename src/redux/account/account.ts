@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Account } from '../../models/Account';
+import { EscrowStatus } from '../../models/EscrowStatus';
 import { PoolToken } from '../../models/PoolToken';
 import { TokenViewModel } from '../../models/TokenViewModel';
 import { UserBalance } from '../../models/UserBalance';
@@ -14,6 +15,7 @@ export type AccountState = Readonly<{
     wrappedNearToken?: TokenViewModel;
     requiredWrappedNearDeposit?: string;
     errors: string[];
+    escrowStatus: EscrowStatus[];
 }>;
 
 const initialState: AccountState = {
@@ -23,6 +25,7 @@ const initialState: AccountState = {
     poolTokens: [],
     errors: [],
     balances: [],
+    escrowStatus: [],
 };
 
 const accountSlice = createSlice({
@@ -77,6 +80,12 @@ const accountSlice = createSlice({
                 balances: action.payload,
             });
         },
+        setEscrowStatus(state: AccountState, action: PayloadAction<EscrowStatus[]>): AccountState {
+            return ({
+                ...state,
+                escrowStatus: action.payload,
+            });
+        },
         setAccountErrors(state: AccountState, action: PayloadAction<string[]>): AccountState {
             return ({
                 ...state,
@@ -96,6 +105,7 @@ export const {
     setNearToken,
     setWrappedNearToken,
     setRequiredWrappedNearDeposit,
+    setEscrowStatus
 } = accountSlice.actions;
 
 export default accountSlice.reducer;
