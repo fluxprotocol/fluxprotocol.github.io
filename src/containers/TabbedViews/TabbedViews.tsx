@@ -41,7 +41,7 @@ export default function TabbedView({
             />
             <SwipeableViews index={activeId} onChangeIndex={handleIndexChange}>
                 {availableItems.map(item => (
-                    <div className={s.view}>
+                    <div className={s.view} key={item.id}>
                         {item.element}
                     </div>
                 ))}

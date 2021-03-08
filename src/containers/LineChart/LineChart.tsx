@@ -3,6 +3,7 @@ import { ReactElement } from 'react';
 import { MarketViewModel } from '../../models/Market';
 import { PriceHistoryData } from '../../models/PriceHistoryData';
 import { useDarkmode } from '../../utils/darkmode';
+import containsNewChartData from './utils/containsNewChartData';
 import generateLineChart, { generateChartData } from './utils/generateLineChart';
 
 interface Props {
@@ -16,6 +17,7 @@ export default function LineChart({
     market,
 }: Props): ReactElement {
     const canvas = useRef<HTMLCanvasElement>(null);
+    const previousChartData = useRef<PriceHistoryData[]>([]);
     const isDarkmodeActive = useDarkmode();
     const chart = useRef<Chart | null>(null);
 
@@ -30,6 +32,11 @@ export default function LineChart({
     useEffect(() => {
         if (!chart.current) return;
 
+        if (!containsNewChartData(previousChartData.current, pricesHistory)) {
+            return;
+        }
+
+        previousChartData.current = pricesHistory;
         chart.current.data = generateChartData(pricesHistory, market);
         chart.current.update();
     }, [chart, pricesHistory, isDarkmodeActive, market]);

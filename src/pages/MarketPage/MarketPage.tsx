@@ -75,52 +75,52 @@ export default function MarketPage() {
                     <ActionsCard>
                         <TabbedView
                             items={[{
-                                element: <TokenSwapperConnector key="tokenswapper" />,
+                                element: <TokenSwapperConnector />,
                                 label: trans('market.label.swap'),
                                 show: account !== null && market?.finalized === false && !isExpired && hasMarketLiquidity && account.canUseApp,
                                 id: '0',
                             }, {
-                                element: <LiquidityProviderConnector key="liquidity" />,
+                                element: <LiquidityProviderConnector />,
                                 label: trans('market.label.liquidity'),
                                 show: account !== null && market?.finalized === false && !isExpired && hasMarketLiquidity && account.canUseApp,
                                 id: '1',
                             }, {
-                                element: <ClaimEarningsConnector key="claimEarnings" />,
+                                element: <ClaimEarningsConnector />,
                                 label: trans('market.label.claimEarnings'),
                                 show: account !== null && market?.finalized === true && account.canUseApp,
                                 id: '2',
                             }, {
-                                element: <SeedPoolConnector key="seedpool" />,
+                                element: <SeedPoolConnector />,
                                 label: trans('market.label.seedPool'),
                                 show: account !== null && market?.type !== MarketType.Scalar && market?.finalized === false && !isExpired && !hasMarketLiquidity && account.canUseApp,
                                 id: '3',
                             }, {
-                                element: <MarketClosed key="marketClosed" />,
+                                element: <MarketClosed />,
                                 label: trans('market.label.marketClosed'),
                                 show: market?.finalized === false && isExpired,
                                 id: '4',
                             }, {
-                                element: <ExitPoolConnector key="exitPool" />,
+                                element: <ExitPoolConnector />,
                                 label: trans('market.label.exitPool'),
                                 show: account !== null && hasMarketLiquidity && !!poolToken && !isExpired && account.canUseApp,
                                 id: '5',
                             }, {
-                                element: <NotLoggedInConnector key="notloggedin" />,
+                                element: <NotLoggedInConnector />,
                                 label: trans('market.label.notLoggedIn'),
                                 show: account === null,
                                 id: '6',
                             }, {
-                                element: <RedeemConnector key="redeem" />,
+                                element: <RedeemConnector />,
                                 label: trans('market.label.redeem'),
                                 show: account !== null && hasMarketLiquidity && market?.finalized === false && canRedeem && account.canUseApp,
                                 id: '7',
                             }, {
-                                element: <SeedScalarMarketConnector key="seedScalar" />,
+                                element: <SeedScalarMarketConnector />,
                                 label: trans('market.label.seedPool'),
                                 show: account !== null && market?.type === MarketType.Scalar && market?.finalized === false && !isExpired && !hasMarketLiquidity,
                                 id: '8',
                             }, {
-                                element: <NotInWhitelistCard key="notinwhitelist" />,
+                                element: <NotInWhitelistCard />,
                                 label: trans('market.label.notInWhitelist'),
                                 show: account !== null && !account.canUseApp,
                                 id: '9',
