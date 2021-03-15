@@ -35,8 +35,6 @@ export default function EscrowStatusOverview({
                     </thead>
                     <tbody>
                         {/** Filters out any pool tokens */}
-
-
                         {escrowStatus.map((info) => {
                             const href = {
                                 pathname: routePaths.marketDetail(info.marketId),

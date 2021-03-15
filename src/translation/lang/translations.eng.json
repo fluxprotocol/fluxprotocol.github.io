@@ -15,6 +15,8 @@
     "pages.marketOverview": "Trade",
     "pages.resoluteOverview": "Finalized",
     "pages.pendingOverview": "Pending",
+    "pages.profileStatus": "Balances",
+    "pages.profileTransactions": "Transactions",
 
     "market.outcomes.yes": "YES",
     "market.outcomes.no": "NO",
@@ -212,6 +214,21 @@
     "userbalances.table.status": "Status",
     "userbalances.table.spent": "Spent",
     "userbalances.table.profit": "Profit",
+
+    "transaction.tokenNames.ofEachShare": "of each outcome",
+
+    "accountTransactionsOverview.title": "Transactions",
+    "accountTransactionsOverview.redeem.type": "Redeem",
+    "accountTransactionsOverview.claimEarnings.type": "Claim Earnings",
+    "accountTransactionsOverview.addLiquidity.type": "Add Liquidity",
+    "accountTransactionsOverview.removeLiquidity.type": "Remove Liquidity",
+    "accountTransactionsOverview.removeLiquidity.feesEarned": "Fees earned",
+    "accountTransactionsOverview.buy.type": "Buy",
+    "accountTransactionsOverview.sell.type": "Sell",
+    "accountTransactionsOverview.table.market": "Market",
+    "accountTransactionsOverview.table.type": "Type",
+    "accountTransactionsOverview.table.date": "Date",
+    "accountTransactionsOverview.table.details": "Details",
 
     "escrowStatus.title": "Validity Escrow",
     "escrowStatus.table.market": "market",

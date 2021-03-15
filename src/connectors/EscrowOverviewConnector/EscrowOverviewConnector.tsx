@@ -19,7 +19,7 @@ export default function EscrowOwerviewConnector({
         if (accountId) {
             dispatch(getEscrowStatus(accountId))
         }
-    }, []);
+    }, [accountId]);
 
     return (
         <EscrowStatusOverview escrowStatus={escrowStatus} className={className} />

@@ -13,6 +13,7 @@ interface RouteProps extends Router.RouteProps {
 export const routePaths = {
     root: () => '/',
     profile: () => '/profile',
+    profileTransactions: () => '/profile/transactions',
     resoluted: () => '/resoluted',
     pending: () => '/pending',
     marketDetail: (marketId = ':marketId') => `/markets/${marketId}`,
@@ -29,7 +30,7 @@ export const routes: RouteProps[] = [
     },
     {
         component: ProfilePage,
-        exact: true,
+        exact: false,
         inNavigation: false,
         key: 'home',
         label: 'Home',

@@ -1,6 +1,20 @@
-import { setAccount, setAccountBalances, setAccountLoading, setAccountPoolTokenLoading, setAccountPoolTokens, setNearToken, setRequiredWrappedNearDeposit, setWrappedNearToken, setEscrowStatus } from "./account";
+import {
+    setAccount,
+    setAccountBalances,
+    setAccountLoading,
+    setAccountPoolTokenLoading,
+    setAccountPoolTokens,
+    setNearToken,
+    setRequiredWrappedNearDeposit,
+    setWrappedNearToken,
+    setEscrowStatus,
+    setAccountTransactions,
+    setTotalAccountTransactions,
+    setAccountTransactionsLoading,
+} from "./account";
 import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo, fetchEscrowStatus } from '../../services/AccountService';
 import { getNearToken, getRequiredWrappedNearStorageDeposit, getWrappedNearStorageBalance, getWrappedNearToken } from "../../services/NearService";
+import { getTransactionsForAccount } from '../../services/TransactionService';
 
 export function signIn() {
     return async (dispatch: Function) => {
@@ -86,5 +100,17 @@ export function signOut() {
     return async (dispatch: Function) => {
         await signUserOut();
         dispatch(setAccount(null));
+    }
+}
+
+export function loadAccountTransactions(accountId: string) {
+    return async (dispatch: Function) => {
+        dispatch(setAccountTransactionsLoading(true));
+
+        const transactions = await getTransactionsForAccount(accountId);
+
+        dispatch(setAccountTransactions(transactions.items));
+        dispatch(setTotalAccountTransactions(transactions.total));
+        dispatch(setAccountTransactionsLoading(false));
     }
 }

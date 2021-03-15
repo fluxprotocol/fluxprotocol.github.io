@@ -3,6 +3,7 @@ import { Account } from '../../models/Account';
 import { EscrowStatus } from '../../models/EscrowStatus';
 import { PoolToken } from '../../models/PoolToken';
 import { TokenViewModel } from '../../models/TokenViewModel';
+import { Transaction } from '../../models/Transaction';
 import { UserBalance } from '../../models/UserBalance';
 
 export type AccountState = Readonly<{
@@ -16,6 +17,11 @@ export type AccountState = Readonly<{
     requiredWrappedNearDeposit?: string;
     errors: string[];
     escrowStatus: EscrowStatus[];
+    accountTransactions: {
+        loading: boolean;
+        transactions: Transaction[];
+        total: number;
+    };
 }>;
 
 const initialState: AccountState = {
@@ -26,6 +32,11 @@ const initialState: AccountState = {
     errors: [],
     balances: [],
     escrowStatus: [],
+    accountTransactions: {
+        loading: false,
+        transactions: [],
+        total: 0,
+    }
 };
 
 const accountSlice = createSlice({
@@ -92,6 +103,33 @@ const accountSlice = createSlice({
                 errors: action.payload,
             });
         },
+        setAccountTransactions(state: AccountState, action: PayloadAction<Transaction[]>): AccountState {
+            return ({
+                ...state,
+                accountTransactions: {
+                    ...state.accountTransactions,
+                    transactions: action.payload,
+                }
+            });
+        },
+        setTotalAccountTransactions(state: AccountState, action: PayloadAction<number>): AccountState {
+            return ({
+                ...state,
+                accountTransactions: {
+                    ...state.accountTransactions,
+                    total: action.payload,
+                }
+            });
+        },
+        setAccountTransactionsLoading(state: AccountState, action: PayloadAction<boolean>): AccountState {
+            return ({
+                ...state,
+                accountTransactions: {
+                    ...state.accountTransactions,
+                    loading: action.payload,
+                }
+            });
+        }
     },
 });
 
@@ -105,7 +143,10 @@ export const {
     setNearToken,
     setWrappedNearToken,
     setRequiredWrappedNearDeposit,
-    setEscrowStatus
+    setEscrowStatus,
+    setAccountTransactions,
+    setTotalAccountTransactions,
+    setAccountTransactionsLoading,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;
