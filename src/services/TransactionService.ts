@@ -10,11 +10,13 @@ import { connectSdk } from "./WalletService";
  * @param {string} accountId
  * @return {Promise<Pagination<Transaction>>}
  */
-export async function getTransactionsForAccount(accountId: string): Promise<Pagination<Transaction>> {
+export async function getTransactionsForAccount(accountId: string, limit: number, offset: number): Promise<Pagination<Transaction>> {
     const sdk = await connectSdk();
 
     const result = await sdk.getTransactions({
         accountId,
+        limit,
+        offset,
     });
 
     const transactions = result.items.map(async (tx) => {

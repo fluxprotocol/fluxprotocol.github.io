@@ -35,7 +35,7 @@ const initialState: AccountState = {
     accountTransactions: {
         loading: false,
         transactions: [],
-        total: 0,
+        total: 1000,
     }
 };
 

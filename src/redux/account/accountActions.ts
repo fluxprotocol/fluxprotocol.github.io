@@ -15,6 +15,7 @@ import {
 import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo, fetchEscrowStatus } from '../../services/AccountService';
 import { getNearToken, getRequiredWrappedNearStorageDeposit, getWrappedNearStorageBalance, getWrappedNearToken } from "../../services/NearService";
 import { getTransactionsForAccount } from '../../services/TransactionService';
+import { Reducers } from "../reducers";
 
 export function signIn() {
     return async (dispatch: Function) => {
@@ -103,13 +104,25 @@ export function signOut() {
     }
 }
 
-export function loadAccountTransactions(accountId: string) {
-    return async (dispatch: Function) => {
+export function loadAccountTransactions(accountId: string, reset = false) {
+    return async (dispatch: Function, getState: () => Reducers) => {
         dispatch(setAccountTransactionsLoading(true));
+        const limit = 100;
 
-        const transactions = await getTransactionsForAccount(accountId);
+        if (reset) {
+            dispatch(setAccountTransactions([]));
+        }
 
-        dispatch(setAccountTransactions(transactions.items));
+        const state = getState();
+        const currentLoadedTransactions = state.account.accountTransactions.transactions;
+        const offest = currentLoadedTransactions.length;
+        const transactions = await getTransactionsForAccount(accountId, limit, offest);
+
+        dispatch(setAccountTransactions([
+            ...currentLoadedTransactions,
+            ...transactions.items,
+        ]));
+
         dispatch(setTotalAccountTransactions(transactions.total));
         dispatch(setAccountTransactionsLoading(false));
     }
