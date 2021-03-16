@@ -42,7 +42,11 @@ export async function getAccountInfo(): Promise<Account | null> {
 
 export async function fetchEscrowStatus(accountId: string): Promise<EscrowStatus[]> {
     const sdk = await connectSdk();
-    const escrowStatus = await sdk.getEscrowStatus(accountId);
+
+    const escrowStatus = await sdk.getEscrowStatus(accountId, undefined, {
+        onlyActive: true,
+    });
+
     return transformEscrowStatusViewModel(escrowStatus);
 };
 
