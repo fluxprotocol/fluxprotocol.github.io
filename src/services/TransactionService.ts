@@ -19,6 +19,11 @@ export async function getTransactionsForAccount(accountId: string, limit: number
         offset,
     });
 
+    if (!result) return {
+        total: 0,
+        items: []
+    }
+
     const transactions = result.items.map(async (tx) => {
         const collateralToken = await transformToMainTokenViewModel(tx.pool.collateral_token_id);
         return transformToTransaction(tx, collateralToken);
