@@ -13,6 +13,7 @@ import TabBar from '../../containers/TabBar';
 import trans from '../../translation/trans';
 
 import s from './ProfilePage.module.scss';
+import ParticipatedMarketsOverviewPage from './sub-pages/ParticipatedMarketsOverviewPage/ParticipatedMarketsOverviewPage';
 
 
 export default function ProfilePage(): ReactElement {
@@ -43,6 +44,10 @@ export default function ProfilePage(): ReactElement {
                     label: trans('pages.profileStatus'),
                     show: true,
                 }, {
+                    id: routePaths.profileParticipated(),
+                    label: trans('pages.profileParticipated'),
+                    show: true,
+                }, {
                     id: routePaths.profileTransactions(),
                     label: trans('pages.profileTransactions'),
                     show: true,
@@ -51,6 +56,7 @@ export default function ProfilePage(): ReactElement {
             <Switch>
                 <Route exact path={routePaths.profile()} component={BalancesOverviewPage} />
                 <Route exact path={routePaths.profileTransactions()} component={TransactionsOverviewPage} />
+                <Route exact path={routePaths.profileParticipated()} component={ParticipatedMarketsOverviewPage} />
             </Switch>
         </Page>
     );

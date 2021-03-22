@@ -11,8 +11,11 @@ import {
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
+    setAccountParticipatedMarketsLoading,
+    setTotalAccountParticipatedMarkets,
+    setAccountParticipatedMarkets,
 } from "./account";
-import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo, fetchEscrowStatus } from '../../services/AccountService';
+import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo, fetchEscrowStatus, getParticipatedMarkets } from '../../services/AccountService';
 import { getNearToken, getRequiredWrappedNearStorageDeposit, getWrappedNearStorageBalance, getWrappedNearToken } from "../../services/NearService";
 import { getTransactionsForAccount } from '../../services/TransactionService';
 import { Reducers } from "../reducers";
@@ -125,5 +128,29 @@ export function loadAccountTransactions(accountId: string, reset = false) {
 
         dispatch(setTotalAccountTransactions(transactions.total));
         dispatch(setAccountTransactionsLoading(false));
+    }
+}
+
+export function loadAccountParticipatedMarkets(accountId: string, reset = false) {
+    return async (dispatch: Function, getState: () => Reducers) => {
+        dispatch(setAccountParticipatedMarketsLoading(true));
+        const limit = 100;
+
+        if (reset) {
+            dispatch(setAccountParticipatedMarkets([]));
+        }
+
+        const state = getState();
+        const currentLoadedMarkets = state.account.accountParticipatedMarkets.participatedMarkets;
+        const offest = currentLoadedMarkets.length;
+        const participatedMarkets = await getParticipatedMarkets(accountId, limit, offest);
+
+        dispatch(setAccountParticipatedMarkets([
+            ...currentLoadedMarkets,
+            ...participatedMarkets.items,
+        ]));
+
+        dispatch(setTotalAccountParticipatedMarkets(participatedMarkets.total));
+        dispatch(setAccountParticipatedMarketsLoading(false));
     }
 }

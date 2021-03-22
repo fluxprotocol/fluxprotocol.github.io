@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Account } from '../../models/Account';
 import { EscrowStatus } from '../../models/EscrowStatus';
+import { ParticipatedMarket } from '../../models/ParticipatedMarket';
 import { PoolToken } from '../../models/PoolToken';
 import { TokenViewModel } from '../../models/TokenViewModel';
 import { Transaction } from '../../models/Transaction';
@@ -22,6 +23,11 @@ export type AccountState = Readonly<{
         transactions: Transaction[];
         total: number;
     };
+    accountParticipatedMarkets: {
+        loading: boolean;
+        participatedMarkets: ParticipatedMarket[];
+        total: number;
+    }
 }>;
 
 const initialState: AccountState = {
@@ -35,6 +41,11 @@ const initialState: AccountState = {
     accountTransactions: {
         loading: false,
         transactions: [],
+        total: 1000,
+    },
+    accountParticipatedMarkets: {
+        loading: false,
+        participatedMarkets: [],
         total: 1000,
     }
 };
@@ -129,6 +140,33 @@ const accountSlice = createSlice({
                     loading: action.payload,
                 }
             });
+        },
+        setAccountParticipatedMarkets(state: AccountState, action: PayloadAction<ParticipatedMarket[]>): AccountState {
+            return ({
+                ...state,
+                accountParticipatedMarkets: {
+                    ...state.accountParticipatedMarkets,
+                    participatedMarkets: action.payload,
+                }
+            });
+        },
+        setTotalAccountParticipatedMarkets(state: AccountState, action: PayloadAction<number>): AccountState {
+            return ({
+                ...state,
+                accountParticipatedMarkets: {
+                    ...state.accountParticipatedMarkets,
+                    total: action.payload,
+                }
+            });
+        },
+        setAccountParticipatedMarketsLoading(state: AccountState, action: PayloadAction<boolean>): AccountState {
+            return ({
+                ...state,
+                accountParticipatedMarkets: {
+                    ...state.accountParticipatedMarkets,
+                    loading: action.payload,
+                }
+            });
         }
     },
 });
@@ -147,6 +185,9 @@ export const {
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
+    setAccountParticipatedMarkets,
+    setAccountParticipatedMarketsLoading,
+    setTotalAccountParticipatedMarkets,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

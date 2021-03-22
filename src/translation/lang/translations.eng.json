@@ -17,6 +17,7 @@
     "pages.pendingOverview": "Pending",
     "pages.profileStatus": "Balances",
     "pages.profileTransactions": "Transactions",
+    "pages.profileParticipated": "Participated Markets",
 
     "market.outcomes.yes": "YES",
     "market.outcomes.no": "NO",
@@ -229,6 +230,11 @@
     "accountTransactionsOverview.table.type": "Type",
     "accountTransactionsOverview.table.date": "Date",
     "accountTransactionsOverview.table.details": "Details",
+
+    "participatedMarketsOverview.title": "Participated markets",
+    "participatedMarketsOverview.table.description": "Market",
+    "participatedMarketsOverview.table.date": "Date",
+    "participatedMarketsOverview.table.status": "Status",
 
     "escrowStatus.title": "Validity Escrow",
     "escrowStatus.table.market": "market",

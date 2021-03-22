@@ -44,7 +44,7 @@ export interface GraphUserBalanceResponse {
     balances: GraphUserBalancesItem[];
 }
 
-function getMarketStatus(data: GraphUserBalancesItem['market']) {
+export function getMarketStatus(data: GraphUserBalancesItem['market']) {
     if (!data) {
         return trans('marketStatus.uknown');
     }

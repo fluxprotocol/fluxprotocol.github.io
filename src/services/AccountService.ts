@@ -6,6 +6,8 @@ import createAuthContract from "./contracts/AuthContract";
 import { connectSdk } from "./WalletService";
 import { ENABLE_WHITELIST } from "../config";
 import { EscrowStatus, transformEscrowStatusViewModel } from "../models/EscrowStatus";
+import { ParticipatedMarket, transformToParticipatedMarket } from "../models/ParticipatedMarket";
+import { Pagination } from "@fluxprotocol/amm-sdk/dist/models/Pagination";
 
 export async function signUserIn() {
     const sdk = await connectSdk();
@@ -136,5 +138,27 @@ export async function getPoolBalanceForMarketByAccount(accountId: string, market
     } catch (error) {
         console.error('[getBalancesForMarketByAccount]', error);
         return null;
+    }
+}
+
+export async function getParticipatedMarkets(accountId: string, limit: number, offset: number): Promise<Pagination<ParticipatedMarket>> {
+    const sdk = await connectSdk();
+    const result = await sdk.getParticipatedMarkets(accountId, {
+        limit,
+        offset,
+    });
+
+    if (!result) return {
+        total: 0,
+        items: []
+    }
+
+    const participatedMarkets = result.items.map((item) => {
+        return transformToParticipatedMarket(item);
+    });
+
+    return {
+        items: participatedMarkets,
+        total: result.total,
     }
 }

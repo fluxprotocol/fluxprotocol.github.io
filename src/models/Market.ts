@@ -1,3 +1,4 @@
+import trans from "../translation/trans";
 import { ClaimViewModel, GraphClaimResponse, transformToClaimViewModel } from "./Claim";
 import { TokenViewModel, transformToTokenViewModels } from "./TokenViewModel";
 import { UserBalance } from "./UserBalance";
@@ -109,5 +110,20 @@ export async function transformToMarketViewModel(
         poolTokenInfo: {
             totalSupply: poolTokenInfo?.total_supply || '0',
         }
+    }
+}
+
+
+export function getMarketStatusTranslation(endTime: number, payoutNumerator: string[] | null, finalized: boolean): string {
+    const now = new Date();
+
+    if (finalized && payoutNumerator !== null) {
+        return trans('marketStatus.finalized');
+    } else if (finalized && payoutNumerator === null) {
+        return trans('marketStatus.invalid');
+    } else if (!finalized && now.getTime() >= endTime) {
+        return trans('marketStatus.resoluting');
+    } else {
+        return trans('marketStatus.ongoing');
     }
 }

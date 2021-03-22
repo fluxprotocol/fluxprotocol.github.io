@@ -1,0 +1,45 @@
+.header {
+    background-color: var(--c-primary-dark);
+    color: var(--c-text);
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.tableWrapper {
+    overflow-y: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.tableHeadRow {
+    height: 2.5rem;
+    color: var(--c-text);
+    opacity: 0.6;
+}
+
+.tableRow {
+    background-color: var(--c-primary-dark);
+    color: var(--c-text);
+    text-align: center;
+    margin: 0;
+    height: 2.5rem;
+}
+
+.link {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    text-decoration: none;
+    color: var(--c-text);
+}
+
+.marketDescription {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
